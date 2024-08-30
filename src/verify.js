@@ -11,16 +11,9 @@ function verifyTelegramData(initDataString) {
     }
     const { hash, ...data } = initData;
      // Сортируем ключи и создаем строку для проверки
-     const sortedData = Object.keys(data)
-     .reduce((acc, key) => {
-         // Кодируем каждое значение в формат URL
-         const value = typeof data[key] === 'object' ? JSON.stringify(data[key]) : data[key];
-         acc[key] = value;
-         return acc;
-     }, {});
-
-     // Преобразуем обратно в строку URL-параметров
-    const dataString = querystring.stringify(sortedData);
+     const dataString = Object.entries(data)
+     .map(([key, value]) => `${key}=${value}`)
+     .join('&'); 
 
     // Создаем секретный ключ на основе токена бота
     const secretKey = crypto.createHash('sha256').update(botToken).digest();
