@@ -6,7 +6,8 @@ function verifyTelegramData(initDataString) {
     // Извлекаем секретный токен бота из переменных окружения
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
     const initData = querystring.parse(initDataString);
-    if (initData.user && typeof initData.user === 'string') {
+      // Если поле user существует и является строкой JSON, преобразуем его обратно в объект
+      if (initData.user && typeof initData.user === 'string') {
         initData.user = JSON.parse(initData.user);
     }
 
@@ -17,25 +18,26 @@ function verifyTelegramData(initDataString) {
         data.user = JSON.stringify(data.user);
     }
 
-    // Сортируем ключи и создаем строку для проверки с использованием '\n'
+    // Сортируем ключи и создаем строку для проверки данных
     const sortedKeys = Object.keys(data).sort();
-    const dataString = sortedKeys
+    const dataCheckString = sortedKeys
         .map(key => `${key}=${data[key]}`)
-        .join('\n');  // Используем '\n' как разделитель
+        .join('\n'); // Используем '\n' как разделитель
 
-    // Создаем секретный ключ на основе токена бота (будет буфер)
-    const secretKey = crypto.createHash('sha256').update(botToken).digest();
+    // Создаем секретный ключ используя HMAC-SHA256 и строку "WebAppData"
+    const secretKey = crypto.createHmac('sha256', botToken)
+        .update("WebAppData")
+        .digest();
 
-    // Генерируем проверочный хеш
+    // Генерируем проверочный хеш с использованием секретного ключа
     const checkHash = crypto.createHmac('sha256', secretKey)
-        .update(dataString)
+        .update(dataCheckString)
         .digest('hex');
 
     // Печатаем для отладки
-    console.log('Исходная строка:', initDataString);
-    console.log('Сформированная строка данных:', dataString);
+    console.log('Строка проверки данных:', dataCheckString);
     console.log('Сгенерированный хеш:', checkHash);
-    console.log('Полученный хеш:', hash);
+    console.log('Полученный хеш от Telegram:', hash);
 
     // Сравниваем проверочный хеш с хешем из данных Telegram
     return checkHash === hash;
