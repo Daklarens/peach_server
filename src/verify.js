@@ -12,19 +12,10 @@ function verifyTelegramData(initDataString) {
     const { hash, ...data } = initData;
      // Сортируем ключи и создаем строку для проверки
 
-     if (typeof data.user === 'object') {
-        data.user = JSON.stringify(data.user);
-    }
 
-     const dataString = Object.entries(data)
-     .map(([key, value]) => `${key}=${value}`)
-     .join('&'); 
-
-
-     // Преобразуем обратно в строку URL-параметров
-   // const dataString = querystring.stringify(sortedData);
-
-   
+    const dataString = Object.entries(data)
+        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+        .join('&'); 
     // Генерируем проверочный хеш
     const checkHash = crypto.createHmac('sha256', botToken)
     .update(dataString)
