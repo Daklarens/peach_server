@@ -15,7 +15,7 @@ function verifyTelegramData(initDataString) {
     .sort()
     .map(key => `${key}=${typeof data[key] === 'object' ? JSON.stringify(data[key]) : data[key]}`)
     .join('&');  // Используем & для соединения параметров
-
+    console.log(sortedData)
     // Создаем секретный ключ на основе токена бота
     const secretKey = crypto.createHash('sha256').update(botToken).digest();
 
