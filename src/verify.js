@@ -16,21 +16,19 @@ function verifyTelegramData(initDataString) {
         data.user = JSON.stringify(data.user);
     }
 
-     const sortedData = Object.entries(data)
+     const dataString = Object.entries(data)
      .map(([key, value]) => `${key}=${value}`)
      .join('&'); 
 
 
      // Преобразуем обратно в строку URL-параметров
-    const dataString = querystring.stringify(sortedData);
+   // const dataString = querystring.stringify(sortedData);
 
-    // Создаем секретный ключ на основе токена бота
-    const secretKey = crypto.createHash('sha256').update(botToken).digest();
-    console.log('Строка',secretKey);
+   
     // Генерируем проверочный хеш
-    const checkHash = crypto.createHmac('sha256', secretKey)
-     .update(dataString)
-     .digest('hex');
+    const checkHash = crypto.createHmac('sha256', botToken)
+    .update(dataString)
+    .digest('hex');
 
     // Печатаем для отладки
     console.log('Строка',initDataString);
