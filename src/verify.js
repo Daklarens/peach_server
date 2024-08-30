@@ -10,23 +10,34 @@ function verifyTelegramData(initDataString) {
         initData.user = JSON.parse(initData.user);
     }
     const { hash, ...data } = initData;
-    console.log(initData)
-    const sortedData = Object.keys(data)
-    .sort()
-    .map(key => `${key}=${typeof data[key] === 'object' ? JSON.stringify(data[key]) : data[key]}`)
-    .join('&');  // Используем & для соединения параметров
-    
+     // Сортируем ключи и создаем строку для проверки
+     const sortedData = Object.keys(data)
+     .sort()
+     .reduce((acc, key) => {
+         // Кодируем каждое значение в формат URL
+         const value = typeof data[key] === 'object' ? JSON.stringify(data[key]) : data[key];
+         acc[key] = value;
+         return acc;
+     }, {});
+
+     // Преобразуем обратно в строку URL-параметров
+    const dataString = querystring.stringify(sortedData);
+
     // Создаем секретный ключ на основе токена бота
     const secretKey = crypto.createHash('sha256').update(botToken).digest();
-    
+
     // Генерируем проверочный хеш
     const checkHash = crypto.createHmac('sha256', secretKey)
-        .update(sortedData)
-        .digest('hex');
-    console.log(checkHash)
-    console.log(hash)
+     .update(dataString)
+     .digest('hex');
+
+    // Печатаем для отладки
+    console.log('Сформированная строка данных:', dataString);
+    console.log('Сгенерированный хеш:', checkHash);
+    console.log('Полученный хеш:', hash);
+
     // Сравниваем проверочный хеш с хешем из данных Telegram
-    return checkHash === hash;
+ return checkHash === hash;
 }
 
 module.exports = verifyTelegramData;
