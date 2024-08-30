@@ -19,8 +19,10 @@ function verifyTelegramData(initDataString) {
     const dataString = Object.entries(data)
         .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
         .join('&'); 
+    const secretKey = crypto.createHash('sha256').update(botToken).digest(); 
+
     // Генерируем проверочный хеш
-    const checkHash = crypto.createHmac('sha256', 'b578e1e59507bcd86d0b4732700fdb15e8ff1b6c5e3fc431fbc93b20539b2131')
+    const checkHash = crypto.createHmac('sha256', secretKey)
     .update(dataString)
     .digest('hex');
 
