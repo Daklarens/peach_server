@@ -12,7 +12,6 @@ function verifyTelegramData(initDataString) {
     const { hash, ...data } = initData;
      // Сортируем ключи и создаем строку для проверки
      const sortedData = Object.keys(data)
-     .sort()
      .reduce((acc, key) => {
          // Кодируем каждое значение в формат URL
          const value = typeof data[key] === 'object' ? JSON.stringify(data[key]) : data[key];
