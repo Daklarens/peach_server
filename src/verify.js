@@ -20,9 +20,10 @@ function verifyTelegramData(initDataString) {
     console.log('Строка проверки данных:', secretKey);
     console.log('Сгенерированный хеш:', checkHash);
     //console.log('Полученный хеш от Telegram:', hash);
+   // hash: '502bba58201775b70cefd130337a4897936476c3bb57b18d6188fe822c22ab4c'
 
     // Сравниваем проверочный хеш с хешем из данных Telegram
-    return checkHash === hash;
+   // return checkHash === hash;
 }
 
 module.exports = verifyTelegramData;
