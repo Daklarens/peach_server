@@ -9,9 +9,11 @@ function verifyTelegramData(initDataString) {
     if (initData.user) {
         initData.user = JSON.parse(initData.user);
     }
-    const sortedData = Object.keys(data)
-        .map(key => `${key}=${data[key]}`)
-        .join('&');  // Используем & для соединения параметров
+    const { hash, ...data } = initData;
+     // Сортируем ключи и создаем строку для проверки
+     const sortedData = Object.keys(data)
+     .map(key => `${key}=${data[key]}`)
+     .join('&');  // Используем & для соединения параметров
 
 
      // Преобразуем обратно в строку URL-параметров
