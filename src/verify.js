@@ -11,6 +11,11 @@ function verifyTelegramData(initDataString) {
     }
     const { hash, ...data } = initData;
      // Сортируем ключи и создаем строку для проверки
+
+     if (typeof data.user === 'object') {
+        data.user = JSON.stringify(data.user);
+    }
+
      const dataString = Object.entries(data)
      .map(([key, value]) => `${key}=${value}`)
      .join('&'); 
