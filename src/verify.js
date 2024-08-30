@@ -32,6 +32,7 @@ function verifyTelegramData(initDataString) {
      .digest('hex');
 
     // Печатаем для отладки
+    console.log('Строка',initDataString);
     console.log('Сформированная строка данных:', dataString);
     console.log('Сгенерированный хеш:', checkHash);
     console.log('Полученный хеш:', hash);
