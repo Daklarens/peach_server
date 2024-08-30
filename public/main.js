@@ -46,7 +46,7 @@
       createTimer() {
         const description = this.desc;
         this.desc = "";
-        fetchJson("/api/timers", {
+        fetchJson("/api/users", {
           method: "post",
           headers: {
             "Content-Type": "application/json",

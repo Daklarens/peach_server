@@ -20,7 +20,7 @@ app.set("view engine", "njk");
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.static("public"));
-app.use("/api/timers", require("./routes/timers"));
+app.use("/api/users", require("./routes/users"));
 app.use("/", require("./routes/auth"));
 
 module.exports = {
