@@ -38,7 +38,7 @@
   new Vue({
     el: "#app",
     data: {
-      desc: "",
+      desc: window.Telegram.WebApp,
       activeTimers: [],
       oldTimers: [],
     },

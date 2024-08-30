@@ -4,14 +4,17 @@
     <meta charset="utf-8" />
     <title>Timers</title>
     <link rel="icon" type="image/png" href="/clock.png">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/css/uikit.min.css" />
   </head>
   <body>
+    <section id="app" v-cloak class="uk-container uk-margin-top uk-margin-bottom">
     <form v-on:submit.prevent="createTimer"> 
-      <button v-bind:disabled="!desc" id="start-timer" class="uk-button uk-button-primary">
+      <button id="start-timer" class="uk-button uk-button-primary">
         <span uk-icon="play"></span> Get data
       </button>
     </form>
+    </section>
 
       <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit-icons.min.js"></script>
