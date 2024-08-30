@@ -18,12 +18,13 @@ function verifyTelegramData(initDataString) {
     
     // Создаем секретный ключ на основе токена бота
     const secretKey = crypto.createHash('sha256').update(botToken).digest();
-    console.log(secretKey)
+    
     // Генерируем проверочный хеш
     const checkHash = crypto.createHmac('sha256', secretKey)
         .update(sortedData)
         .digest('hex');
-
+    console.log(checkHash)
+    console.log(hash)
     // Сравниваем проверочный хеш с хешем из данных Telegram
     return checkHash === hash;
 }
