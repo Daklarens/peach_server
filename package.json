@@ -1,0 +1,31 @@
+{
+  "name": "timers-auth",
+  "version": "1.0.0",
+  "author": "",
+  "description": "",
+  "keywords": [],
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run node index.js",
+    "dev": "nodemon index.js -e js,njk",
+    "dev2": "nodemon index.js"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cross-env": "^7.0.3",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "lodash": "^4.17.21",
+    "mongodb": "^3.6.5",
+    "nanoid": "^3.1.10",
+    "nunjucks": "^3.2.1"
+  }
+}
