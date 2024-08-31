@@ -38,7 +38,7 @@ function verifyTelegramData(initDataString) {
 
     // Генерируем проверочный хеш
     const checkHash = crypto.createHmac('sha256', secretKey)
-        .update(sortedData)
+        .update(formattedString)
         .digest('hex');
 
     console.log('Сгенерированный хеш:', checkHash);
