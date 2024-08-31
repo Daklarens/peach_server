@@ -13,11 +13,6 @@ function verifyTelegramData(initDataString) {
         initData.user = JSON.stringify(JSON.parse(initData.user)); // Декодируем и форматируем
     }
 
-    // Преобразуем строку JSON user в нужный формат с экранированными кавычками
-    if (initData.user) {
-        initData.user = initData.user.replace(/"/g, '\\"'); // Экранируем кавычки
-        initData.user = initData.user; // Оборачиваем строку user в кавычки и добавляем префикс 'user='
-    }
 
     // Убираем поле hash из данных для проверки
     const { hash, ...data } = initData;
