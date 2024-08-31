@@ -5,25 +5,36 @@ require('dotenv').config();
 function verifyTelegramData(initDataString) {
     // Извлекаем секретный токен бота из переменных окружения
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
-   const str = 'auth_date=1725058933\nquery_id=AAGYe81ZAAAAAJh7zVk7ct-Y\nuser=%7B%22id%22%3A1506638744%2C%22first_name%22%3A%22Dark%22%2C%22last_name%22%3A%22Larens%22%2C%22username%22%3A%22darklarens%22%2C%22language_code%22%3A%22ru%22%2C%22is_premium%22%3Atrue%2C%22allows_write_to_pm%22%3Atrue%7D'
-    // Создаем секретный ключ используя HMAC-SHA256 и строку "WebAppData"
-    const secretKey = crypto.createHmac('sha256', botToken)
-        .update("WebAppData")
-        .digest();
+    // Парсим строку initData в объект
+    const initData = querystring.parse(initDataString);
+    // Преобразуем поле user из URL-кодированной строки JSON обратно в объект, затем в строку JSON
+    if (initData.user && typeof initData.user === 'string') {
+        initData.user = JSON.stringify(JSON.parse(initData.user)); // Декодируем и форматируем
+    }
+    // Убираем поле hash из данных для проверки
+    const { hash, ...data } = initData;
+    // Сортируем ключи в алфавитном порядке
+    const sortedKeys = Object.keys(data).sort();
+    // Формируем строку в нужном формате с разделителем '\n'
+    const formattedString = sortedKeys
+        .map(key => `${key}=${data[key]}`)
+        .join('\n');  // Используем '\n' как разделитель
 
-    // Генерируем проверочный хеш с использованием секретного ключа
+    console.log('Сформированная строка для хеширования:', formattedString);
+
+    // Создаем хеш на основе токена бота
+    const secretKey = crypto.createHash('sha256').update(botToken).digest();
+
+    // Генерируем проверочный хеш
     const checkHash = crypto.createHmac('sha256', secretKey)
-        .update(str)
+        .update(sortedData)
         .digest('hex');
 
-    // Печатаем для отладки
-    console.log('Строка проверки данных:', secretKey);
     console.log('Сгенерированный хеш:', checkHash);
-    //console.log('Полученный хеш от Telegram:', hash);
-   // hash: '502bba58201775b70cefd130337a4897936476c3bb57b18d6188fe822c22ab4c'
+    console.log('Хеш от Telegram:', hash);
 
     // Сравниваем проверочный хеш с хешем из данных Telegram
-   // return checkHash === hash;
+    return checkHash === hash;
 }
 
 module.exports = verifyTelegramData;
