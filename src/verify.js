@@ -28,8 +28,8 @@ function verifyTelegramData(initDataString) {
     console.log('Сформированная строка для хеширования:', formattedString);
 
     // Создаем хеш на основе токена бота
-    const secretKey = crypto.createHmac('sha256', "WebAppData")
-        .update(botToken)
+    const secretKey = crypto.createHmac('sha256', botToken)
+        .update("WebAppData")
         .digest('hex');
 
     // Генерируем проверочный хеш
