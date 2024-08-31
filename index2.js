@@ -43,4 +43,7 @@ function verifyTelegramData(initDataString) {
     return checkHash === hash;
 }
 
-module.exports = verifyTelegramData;
+// Пример использования функции с вашими данными
+const initData = 'query_id=AAGYe81ZAAAAAJh7zVlchXdp&user=%7B%22id%22%3A1506638744%2C%22first_name%22%3A%22Dark%22%2C%22last_name%22%3A%22Larens%22%2C%22username%22%3A%22darklarens%22%2C%22language_code%22%3A%22ru%22%2C%22is_premium%22%3Atrue%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1725098352&hash=dea1eb5c107ec6a283cabe3e092aa02e20a61566b4f4f6ea900f09e05a8dfbea';
+
+console.log('Проверка хеша:', verifyTelegramData(initData));
