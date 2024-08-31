@@ -13,6 +13,12 @@ function verifyTelegramData(initDataString) {
         initData.user = JSON.stringify(JSON.parse(initData.user)); // Декодируем и форматируем
     }
 
+    // Преобразуем строку JSON user в нужный формат с экранированными кавычками
+    if (initData.user) {
+        initData.user = initData.user.replace(/"/g, '\\"'); // Экранируем кавычки
+        initData.user = initData.user; // Оборачиваем строку user в кавычки и добавляем префикс 'user='
+    }
+
     // Убираем поле hash из данных для проверки
     const { hash, ...data } = initData;
 
@@ -28,12 +34,12 @@ function verifyTelegramData(initDataString) {
     console.log('Сформированная строка для хеширования:', formattedString);
 
     // Создаем хеш на основе токена бота
-    const secretKey = crypto.createHmac('sha256', botToken)
-        .update("WebAppData")
+    const secretKey = crypto.createHmac('sha256', "WebAppData")
+        .update(botToken)
         .digest('hex');
 
     // Генерируем проверочный хеш
-    const checkHash = crypto.createHmac('sha256', formattedString)
+    const checkHash = crypto.createHmac('sha256',  formattedString)
         .update(secretKey)
         .digest('hex');
 
