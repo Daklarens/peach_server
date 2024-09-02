@@ -7,9 +7,13 @@ const app = express();
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../public'))); // Подключите статические файлы до маршрутов
 app.use(express.json({ limit: '13mb' })); 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use('/public', express.static(path.join(__dirname, '../public')));
+
+// Настройка для обычных статических файлов
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Для работы с API
 app.use("/api/users", require("./routes/users"));
