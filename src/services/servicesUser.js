@@ -2,63 +2,72 @@ const { db,ObjectId } = require("../db");
 
 class UserService {
   constructor() {}
-  async addUser(name, password) {
-    const query = {
-      username: name,
-      password: password,
-    };
-    const dbConnect = await db();
-    const dbCreateUser = await dbConnect.collection("users")
-      .insertOne(query)
-    return dbCreateUser.insertedId;
-  }
-  async findUser(nameOrId) {
-    const dbConnect = await db();
-    const dbfindUser = await dbConnect.collection("users")
-      .findOne({username:nameOrId});
-    if(!dbfindUser){
-      const dbfinId = await dbConnect.collection("users")
-        .findOne({_id:ObjectId(nameOrId)});
-      if(!dbfinId){
-        return undefined;
-      }
-      return dbfinId;  
+ 
+  async createUser(user){
+    const data = await db.insert('users',{...user})
+    if(data){
+      return true
     }else{
-      return dbfindUser;
-    } 
-      
-  }
-
-  async findSessionUser(sessionId) {
-    const dbConnect = await db();
-    const dbfindSession = await dbConnect.collection("sessions")
-      .findOne({_id:ObjectId(sessionId)});
-    return dbfindSession;  
-  }
-
-  async createSession(userId) {
-    const query = {
-      "userId":ObjectId(userId)
+      return false
     }
-    const dbConnect = await db();
-    const dbCreateSession = await dbConnect.collection("sessions")
-      .insertOne(query)
-    return dbCreateSession.insertedId;
   }
-  async deleteSession(sessionId) {
-    const dbConnect = await db();
-    const dbDeleteSession = await dbConnect.collection("sessions")
-      .deleteOne({_id:ObjectId(sessionId)})
-    console.log(sessionId);  
+  async getInfoUser(tid){
+    const data = await db.find('users',{tid})
+    if(data.length > 0){
+        return data[0]
+    }else{
+        return false
+    }
   }
-  async countTimer(userId) {
-    const dbConnect = await db();
-    const dbCountTimer = await dbConnect.collection("timers")
-      .find({userId:ObjectId(userId)}).toArray()
-    return dbCountTimer.length;  
-  } 
-}
+  async updateInfoUser(tid,update){
+    const data = await db.updateOne('users',{tid},{...update})
+    return data
+  }
+  async createAnkets(anket){
 
+  }
+  async checkAnkets(tid){
+    const count = await db.count('ankets',{tid})
+    if(count.length > 0){
+      return true
+    }else{
+      return false
+    }
+  }
+  async makerloader(user){
+    const getData = await this.getInfoUser(user.id)
+    if(getData){
+      if(getData === user){
+        console.log('Данные пользователя сходятся tid: ', user.id)
+        return true
+      }else{
+        //Вносим новые данные в базу
+        console.log('Обновление данных tid: ',user.id)
+        await  this.updateInfoUser(user.id,user)
+        return true
+      }
+    }else{
+      //Регистрация данных пользователя
+      console.log('Регистрация пользователя tid: ', user.id)
+      await this.createUser(user)
+      return true
+    }
+  }
+
+  //Проверка зарегистрирован пользователь или нет и проверка наличия анкеты
+  async userLoader (user){
+    //Проверка есть ли пользователь в базе данных
+    const login = await this.makerloader(user)
+    //Проверкеа есть ли у пользователя анкета
+    const anket = await this.checkAnkets(user.id)
+    if(login && anket){
+      return {user:anket}
+    }else{
+      return {user:false}
+    }
+  }
+
+}
 module.exports = {
     UserService,
 }

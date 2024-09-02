@@ -2,6 +2,8 @@ const crypto = require('crypto');
 const querystring = require('querystring');
 require('dotenv').config(); // Загружаем переменные окружения
 
+
+//Проферка хеша 
 function verifyTelegramData(initDataString) {
     // Парсим строку initData в объект
     const initData = querystring.parse(initDataString);
@@ -40,7 +42,58 @@ function verifyTelegramData(initDataString) {
     console.log('Полученный хеш от Telegram:', hash);
 
     // Сравниваем проверочный хеш с хешем из данных Telegram
-    return checkHash === hash;
+    if(checkHash === hash){
+        return {hash: true, data:dataCheckString};
+    }else{
+        return {hash: false};
+    }
+    
+}
+//Создание токена 
+function createToken(userData) {
+    // Данные пользователя, которые будут включены в токен
+    const payload = {
+        id: userData.id,
+        username: userData.username,
+        firstName: userData.first_name,
+        lastName: userData.last_name,
+        isPremium: userData.is_premium,
+    };
+
+    // Секретный ключ для подписи токена (необходимо хранить в .env)
+    const secretKey = process.env.JWT_SECRET;
+
+    // Настройки токена, например, время жизни
+    const options = {
+        expiresIn: '30m' // Токен будет действителен 1 час
+    };
+
+    // Создаем и подписываем токен
+    const token = jwt.sign(payload, secretKey, options);
+
+    return token;
+}
+//проверка токена и создание нового
+function verifyAndRefreshToken(token, userData) {
+    const secretKey = process.env.JWT_SECRET ;
+
+    try {
+        // Проверяем токен
+        const decoded = jwt.verify(token, secretKey);
+        console.log('Токен действителен:', decoded);
+        return { valid: true, token, decoded }; // Возвращаем токен, если он ещё действителен
+    } catch (error) {
+        if (error.name === 'TokenExpiredError') {
+            // Если токен истёк, создаём новый
+            console.log('Токен истёк, создаём новый...');
+            const newToken = createToken(userData); // Функция для создания нового токена
+            return { valid: false, token: newToken, decoded: null };
+        } else {
+            // Другие ошибки проверки токена
+            console.error('Ошибка проверки токена:', error.message);
+            return { valid: false, token: null, decoded: null };
+        }
+    }
 }
 
-module.exports = verifyTelegramData;
+module.exports = verifyTelegramData,createToken,verifyAndRefreshToken;

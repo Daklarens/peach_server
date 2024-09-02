@@ -1,0 +1,35 @@
+ initDataUnsafe: {
+    query_id: 'AAGYe81ZAAAAAJh7zVmjf6dA',
+    user: {
+      id: 1506638744,
+      first_name: 'Dark',
+      last_name: 'Larens',
+      username: 'darklarens',
+      language_code: 'ru',
+      is_premium: true,
+      allows_write_to_pm: true
+    },
+    auth_date: '1725028477',
+    hash: '38e69fd748845bf961be3ec29b51f312af5207b9ba944a93dfce773b12460e0b'
+  },
+  version: '7.4',
+  platform: 'macos',
+  colorScheme: 'dark',
+  
+ initDataUnsafe: {
+    query_id: 'AAGYe81ZAAAAAJh7zVlxa2kH',
+    user: {
+      id: 1506638744,
+      first_name: 'Dark',
+      last_name: 'Larens',
+      username: 'darklarens',
+      language_code: 'ru',
+      is_premium: true,
+      allows_write_to_pm: true
+    },
+    auth_date: '1725028702',
+    hash: '291256a155b7cc9fe6a11c6d27740e10f966772e275a8b32930dcae5f5b3a640'
+  },
+  version: '7.4',
+  platform: 'macos',
+  colorScheme: 'dark',

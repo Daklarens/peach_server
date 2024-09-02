@@ -17,7 +17,7 @@
     "nodemon": "^2.0.7"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.5",
     "cross-env": "^7.0.3",
     "crypto": "^1.0.1",
@@ -28,6 +28,7 @@
     "mongodb": "^3.6.5",
     "nanoid": "^3.1.10",
     "nunjucks": "^3.2.1",
+    "path": "^0.12.7",
     "querystring": "^0.2.1"
   }
 }
