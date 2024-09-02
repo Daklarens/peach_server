@@ -11,7 +11,7 @@ const UserService = new servicesUser.UserService();
 const TimerService = new servicesTimer.TimerService();
 
 router.get("/", async (req, res) => {
-  res.render("index", {
+  res.sendFile("index.html", {
     user: req.user,
   });
 });
