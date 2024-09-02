@@ -1,7 +1,7 @@
 const express = require("express");
 const jwt = require('jsonwebtoken');
 const path = require('path');
-const FileService = require('./file');
+const FileService = require('../file');
 const UserService = require('../services/servicesUser')
 const service = new UserService.UserService()
 const {verifyTelegramData, createToken, verifyAndRefreshToken} = require('../verify');
