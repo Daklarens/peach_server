@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
   console.log(isValid)
 });
 
-app.post('/upload', async (req, res) => {
+router.post('/upload', async (req, res) => {
   try {
     const base64Image = req.body.data.avatar;
     const outputDir = path.join(__dirname, './public/avatars/');
@@ -48,7 +48,7 @@ app.post('/upload', async (req, res) => {
 });
 
 // Маршрут для получения изображения по имени файла
-app.get('/f1/:filename', (req, res) => {
+router.get('/f1/:filename', (req, res) => {
   const { filename } = req.params;
   const filepath = path.join(uploadsDir, filename);
 
