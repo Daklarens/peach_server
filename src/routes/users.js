@@ -18,12 +18,10 @@ router.post("/", async (req, res) => {
   const isValid = verifyTelegramData(data.initData);
   if(isValid.hash){
     //парсим строку юзера
-    console.log(isValid.data.user)
     const dataUser = isValid.data.user
       .replace(/"([^"]+)":/g, '$1:'); 
-      console.log(dataUser)
     //Сервис для авторизации данных пользователя 
-    const userCheck = await service.userLoader(data.user)
+    const userCheck = await service.userLoader(dataUser)
     //Создание токена с записью данных польователя
     const token = createToken(dataUser, process.env.JWT)
     //Отправка всех данных
