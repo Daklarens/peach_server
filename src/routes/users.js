@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
   const isValid = verifyTelegramData(data.initData);
   if(isValid.hash){
     //парсим строку юзера
-    //console.log(isValid.data)
+    console.log(isValid.data.user)
     const dataUser = JSON.stringify(isValid.data.user)
       .replace(/"([^"]+)":/g, '$1:'); 
       console.log(dataUser)
