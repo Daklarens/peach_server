@@ -19,6 +19,8 @@ router.post("/", async (req, res) => {
     //парсим строку юзера
     const dataUser = isValid.data.user
       .replace(/"([^"]+)":/g, '$1:'); 
+    const dataUserJs = JSON.parse(dataUser)
+    console.log(dataUserJs)
     //Сервис для авторизации данных пользователя 
     const userCheck = await service.userLoader(dataUser)
     //Создание токена с записью данных польователя
