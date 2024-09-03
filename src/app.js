@@ -16,7 +16,7 @@ app.use('/dist', express.static(path.join(__dirname, '../dist')));
 app.use(express.static(path.join(__dirname, '../dist')));
 
 // Для работы с API
-app.use("/api/users", require("./routes/users"));
+app.use("/api/users/", require("./routes/users"));
 
 // Для отображения страницы
 app.use("/", require("./routes/auth"));
