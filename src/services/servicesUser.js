@@ -36,6 +36,7 @@ class UserService {
   }
   async makerloader(user){
     const getData = await this.getInfoUser(user.id)
+    const countUser = await db.count('users')
     if(getData){
       if(getData === user){
         console.log('Данные пользователя сходятся tid: ', user.id)
@@ -49,6 +50,8 @@ class UserService {
     }else{
       //Регистрация данных пользователя
       console.log('Регистрация пользователя tid: ', user.id)
+      user.tid = user.id
+      user.id = countUser+1
       await this.createUser(user)
       return true
     }
