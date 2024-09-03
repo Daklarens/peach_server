@@ -35,7 +35,6 @@ class UserService {
     }
   }
   async makerloader(user){
-    console.log(user.id)
     const getData = await this.getInfoUser(user.id)
     if(getData){
       if(getData === user){

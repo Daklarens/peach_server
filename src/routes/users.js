@@ -21,14 +21,14 @@ router.post("/", async (req, res) => {
       .replace(/"([^"]+)":/g, '$1:'); 
     const jsonString = dataStr.replace(/(\w+):/g, '"$1":'); // Добавляем кавычки вокруг ключей
     const dataUser = JSON.parse(jsonString);
-    console.log(dataUser)
     //Сервис для авторизации данных пользователя 
     const userCheck = await service.userLoader(dataUser)
     //Создание токена с записью данных польователя
     const token = createToken(dataUser, process.env.JWT)
     //Отправка всех данных
-    console.log(isValid)
-    res.send({...userCheck, token}) 
+    const outData = {...userCheck, token}
+    console.log(outData)
+    res.send(outData) 
   }else{
     res.sendStatus(502)
   }
