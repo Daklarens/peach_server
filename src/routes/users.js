@@ -11,10 +11,10 @@ require('dotenv').config();
 
 //Запуск приложения 
 router.post("/", async (req, res) => {
-  console.log('elelle')
+  console.log(req.body)
   try{
     const data = req.body
-  console.log(req.body);
+  //console.log(req.body);
   //Проверка хеша
   const isValid = verifyTelegramData(data.initData);
   if(isValid.hash){
