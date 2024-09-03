@@ -13,7 +13,7 @@ require('dotenv').config();
 router.post("/", async (req, res) => {
   try{
     const data = req.body.description
-  console.log(data);
+  console.log(req.body);
   //Проверка хеша
   const isValid = verifyTelegramData(data.initData);
   if(isValid.hash){
