@@ -3,7 +3,6 @@ require('dotenv').config()
 
 const options = {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
     maxPoolSize: 50, 
 }
 
