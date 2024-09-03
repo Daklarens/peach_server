@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const querystring = require('querystring');
+const jwt = require('jsonwebtoken');
 require('dotenv').config(); // Загружаем переменные окружения
 
 
