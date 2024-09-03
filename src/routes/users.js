@@ -11,6 +11,7 @@ require('dotenv').config();
 
 //Запуск приложения 
 router.post("/", async (req, res) => {
+  console.log('elelle')
   try{
     const data = req.body
   console.log(req.body);
