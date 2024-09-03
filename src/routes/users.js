@@ -12,7 +12,7 @@ require('dotenv').config();
 //Запуск приложения 
 router.post("/", async (req, res) => {
   try{
-    const data = req.body.description
+    const data = req.body
   console.log(req.body);
   //Проверка хеша
   const isValid = verifyTelegramData(data.initData);
@@ -25,16 +25,15 @@ router.post("/", async (req, res) => {
     //Создание токена с записью данных польователя
     const token = createToken(dataUser, process.env.JWT)
     //Отправка всех данных
+    console.log(isValid)
     res.send({...userCheck, token}) 
   }else{
     res.send(502)
   }
   } catch (error) {
-    console.log('Ошибка в блоке /')
-    console.log(error)
+    console.log('Ошибка при загрузке приложения')
+    res.send(502)
   }
-  
-  console.log(isValid)
 });
 
 router.post('/upload', async (req, res) => {
