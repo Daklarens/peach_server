@@ -43,7 +43,7 @@ function verifyTelegramData(initDataString) {
 
     // Сравниваем проверочный хеш с хешем из данных Telegram
     if(checkHash === hash){
-        return {hash: true, data:dataCheckString};
+        return {hash: true, data:initData};
     }else{
         return {hash: false};
     }
