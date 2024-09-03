@@ -36,10 +36,10 @@ function verifyTelegramData(initDataString) {
         .digest('hex');
 
     // Печатаем для отладки
-    console.log('Строка проверки данных:', dataCheckString);
-    console.log('Секретный ключ (hex):', secretKey.toString('hex'));
-    console.log('Сгенерированный хеш:', checkHash);
-    console.log('Полученный хеш от Telegram:', hash);
+    //console.log('Строка проверки данных:', dataCheckString);
+    //console.log('Секретный ключ (hex):', secretKey.toString('hex'));
+    //console.log('Сгенерированный хеш:', checkHash);
+    //console.log('Полученный хеш от Telegram:', hash);
 
     // Сравниваем проверочный хеш с хешем из данных Telegram
     if(checkHash === hash){
