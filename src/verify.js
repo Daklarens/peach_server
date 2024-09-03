@@ -96,4 +96,4 @@ function verifyAndRefreshToken(token, userData) {
     }
 }
 
-module.exports = verifyTelegramData,createToken,verifyAndRefreshToken;
+module.exports = {verifyTelegramData,createToken,verifyAndRefreshToken};
