@@ -62,7 +62,7 @@ function createToken(userData) {
     };
 
     // Секретный ключ для подписи токена (необходимо хранить в .env)
-    const secretKey = process.env.JWT_SECRET;
+    const secretKey = String(process.env.JWT_SECRET);
 
     // Настройки токена, например, время жизни
     const options = {
