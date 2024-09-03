@@ -11,6 +11,7 @@ require('dotenv').config();
 
 //Запуск приложения 
 router.post("/", async (req, res) => {
+  console.log('lelel')
   const data = req.body.description
   console.log(data);
   //Проверка хеша
