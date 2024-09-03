@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
   if(isValid.hash){
     //парсим строку юзера
     console.log(isValid.data.user)
-    const dataUser = JSON.stringify(isValid.data.user)
+    const dataUser = isValid.data.user
       .replace(/"([^"]+)":/g, '$1:'); 
       console.log(dataUser)
     //Сервис для авторизации данных пользователя 
