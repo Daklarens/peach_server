@@ -20,7 +20,7 @@ class UserService {
     }
   }
   async updateInfoUser(tid,update){
-    const data = await db.updateOne('users',{tid},{...update})
+    const data = await db.update('users',{tid},{...update})
     return data
   }
   async createAnkets(anket){
@@ -43,8 +43,9 @@ class UserService {
         return true
       }else{
         //Вносим новые данные в базу
+        const {userId, ...update} = user
         console.log('Обновление данных tid: ',user.id)
-        await  this.updateInfoUser(user.id,user)
+        await  this.updateInfoUser(userId,update)
         return true
       }
     }else{
