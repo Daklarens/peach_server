@@ -15,6 +15,10 @@ router.get("/", async (req, res) => {
     user: req.user,
   });
 });
+router.post("/k/", async (req, res) => {
+  console.log('kkkkkkkk')
+});
+
 
 
 
