@@ -12,7 +12,8 @@ require('dotenv').config();
 //Запуск приложения 
 router.post("/", async (req, res) => {
   console.log('lelel')
-  const data = req.body.description
+  try{
+    const data = req.body.description
   console.log(data);
   //Проверка хеша
   const isValid = verifyTelegramData(data.initData);
@@ -29,6 +30,11 @@ router.post("/", async (req, res) => {
   }else{
     res.send(502)
   }
+  } catch (error) {
+    console.log('Ошибка в блоке /')
+    console.log(error)
+  }
+  
   console.log(isValid)
 });
 
