@@ -11,8 +11,30 @@ require('dotenv').config();
 
 //Запуск приложения 
 router.post("/", async (req, res) => {
-  console.log('lelel')
+  try{
+    const data = req.body.description
+  console.log(data);
+  //Проверка хеша
+  const isValid = verifyTelegramData(data.initData);
+  if(isValid.hash){
+    //парсим строку юзера
+    const dataUser = JSON.stringify(isValid.data.user)
+      .replace(/"([^"]+)":/g, '$1:'); 
+    //Сервис для авторизации данных пользователя 
+    const userCheck = await service.userLoader(data.user)
+    //Создание токена с записью данных польователя
+    const token = createToken(dataUser, process.env.JWT)
+    //Отправка всех данных
+    res.send({...userCheck, token}) 
+  }else{
+    res.send(502)
+  }
+  } catch (error) {
+    console.log('Ошибка в блоке /')
+    console.log(error)
+  }
   
+  console.log(isValid)
 });
 
 router.post('/upload', async (req, res) => {
