@@ -48,9 +48,30 @@ router.post("/", async (req, res) => {
 
 // Маршрут для загрузки аватара
 router.post('/upload', upload.single('avatar'), async (req, res) => {
-  console.log('loading img')
-  const userData = JSON.parse(req.body.data); // Данные пользователя
-  console.log('Данные пользователя:', userData);
+  try {
+    console.log('loading img');
+
+    // Проверка, загружен ли файл
+    if (!req.file) {
+        return res.status(400).send('Файл не загружен');
+    }
+
+    // Проверка, если данные пользователя переданы корректно
+    const userData = req.body.data ? JSON.parse(req.body.data) : null;
+
+    if (!userData) {
+        return res.status(400).send('Данные пользователя отсутствуют или некорректны');
+    }
+
+    console.log('Данные пользователя:', userData);
+
+    // Здесь вы можете сохранить данные пользователя и информацию о файле в БД или выполнить другие действия
+
+    res.send(`Файл ${req.file.originalname} успешно загружен и данные пользователя обработаны`);
+} catch (error) {
+    console.error('Ошибка при обработке загрузки:', error);
+    res.status(500).send('Ошибка при обработке запроса');
+}
  /* try {
     const outputDir = path.join(__dirname, '../noPublic/avatars');
 
@@ -68,7 +89,6 @@ router.post('/upload', upload.single('avatar'), async (req, res) => {
     console.error('Error processing image or data:', error.message);
     res.status(500).send({ success: false, message: error.message });
   }*/
-    res.send({ success: true, message: 'Изображение успешно загружено!' });
 
 });
 
