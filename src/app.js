@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const app = express();
-/*
+
 app.use((req, res, next) => {
   console.log('Incoming Request Headers:', req.headers);
   req.on('data', chunk => {
@@ -15,7 +15,7 @@ app.use((req, res, next) => {
   });
   next();
 }); 
-*/
+
 app.use(cookieParser());
 // Для JSON
 app.use(express.json({ limit: '50mb' })); // Увеличьте лимит в зависимости от ваших нужд
