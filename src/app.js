@@ -8,18 +8,18 @@ const app = express();
 // Настраиваем multer для загрузки файлов в папку 'uploads'
 const upload = multer({ dest: 'uploads/' });
 
-/*
+
 app.use((req, res, next) => {
-  console.log('Incoming Request Headers:', req.headers);
+  //console.log('Incoming Request Headers:', req.headers);
   req.on('data', chunk => {
     console.log('Received chunk:', chunk.toString());
   });
-  req.on('end', () => {
-    console.log('End of request');
-  });
+  //req.on('end', () => {
+  //  console.log('End of request');
+  //});
   next();
 }); 
-*/
+
 
 
 
