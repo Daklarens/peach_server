@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
 router.post('/upload', async (req, res) => {
   try {
     const base64Image = req.body.data.avatar;
-    const outputDir = path.join(__dirname, '../../dist/noPublic/avatars');
+    const outputDir = path.join(__dirname, '../noPublic/avatars');
 
     // Используем FileService для обработки и сохранения изображения
     const filename = await FileService.processAndSaveImage(base64Image, outputDir);
