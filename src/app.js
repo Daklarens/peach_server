@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-
+const multer  = require("multer");
 const app = express();
 
 app.use((req, res, next) => {
@@ -16,23 +16,13 @@ app.use((req, res, next) => {
   next();
 }); 
 
-//app.use(cookieParser());
-// Для JSON
+app.use(cookieParser());
+app.use(multer({dest:"uploads"}).single("filedata"));
 app.use(express.json({ limit: '50mb' })); // Увеличьте лимит в зависимости от ваших нужд
-app.use(bodyParser.json({ limit: '50mb' })); // Для body-parser
-
-// Для urlencoded
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
-
 app.use('/dist', express.static(path.join(__dirname, '../dist')));
-
-// Настройка для обычных статических файлов
 app.use(express.static(path.join(__dirname, '../dist')));
-
-// Для работы с API
 app.use("/api/users/", require("./routes/users"));
-
-// Для отображения страницы
 app.use("/", require("./routes/auth"));
 
 module.exports = {
