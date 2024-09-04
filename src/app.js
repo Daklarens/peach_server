@@ -17,9 +17,14 @@ app.use((req, res, next) => {
 }); 
 */
 app.use(cookieParser());
-app.use(express.json());
-app.use(express.json({ limit: '13mb' })); 
-app.use(bodyParser.urlencoded({limit: '13mb', extended: true}));
+// Для JSON
+app.use(express.json({ limit: '50mb' })); // Увеличьте лимит в зависимости от ваших нужд
+app.use(bodyParser.json({ limit: '50mb' })); // Для body-parser
+
+// Для urlencoded
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // Для body-parser
+
 
 app.use('/dist', express.static(path.join(__dirname, '../dist')));
 
