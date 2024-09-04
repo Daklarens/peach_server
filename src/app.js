@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const multer  = require("multer");
 const app = express();
 
+/*
 app.use((req, res, next) => {
   console.log('Incoming Request Headers:', req.headers);
   req.on('data', chunk => {
@@ -14,7 +15,7 @@ app.use((req, res, next) => {
   });
   next();
 }); 
-
+*/
 
 const upload = multer({ dest: 'uploads/' });
 app.use(upload.single('file'));
