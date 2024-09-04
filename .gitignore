@@ -1,1 +1,12 @@
-node_modules
+# Игнорировать директорию node_modules
+node_modules/
+
+# Игнорировать файл журнала npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Игнорировать кэш-папки
+.cache/
+.pnp/
+.pnp.js
