@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
     res.sendStatus(502);
   }
 });
-
+ /* 
 // Маршрут для загрузки аватара
 router.post('/upload', async (req, res) => {
   console.log('loading img');
@@ -66,7 +66,7 @@ router.post('/upload', async (req, res) => {
     console.error('Ошибка при обработке загрузки:', error);
     res.status(500).send('Ошибка при обработке запроса');
 }
- /* try {
+try {
     const outputDir = path.join(__dirname, '../noPublic/avatars');
 
     // Парсим JSON строку, переданную в FormData
@@ -82,10 +82,10 @@ router.post('/upload', async (req, res) => {
   } catch (error) {
     console.error('Error processing image or data:', error.message);
     res.status(500).send({ success: false, message: error.message });
-  }*/
+
 
 });
-
+  }*/
 // Маршрут для получения изображения по имени файла
 router.get('/f1/:filename', (req, res) => {
   const { filename } = req.params;
