@@ -12,6 +12,7 @@ require('dotenv').config();
 
 // Запуск приложения 
 router.post("/", async (req, res) => {
+  console.log('Загрузка приложения')
   console.log(req.body)
   try {
     const data = req.body;
