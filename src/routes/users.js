@@ -13,7 +13,6 @@ require('dotenv').config();
 // Запуск приложения 
 router.post("/", async (req, res) => {
   console.log('Загрузка приложения')
-  console.log(req)
   try {
     const data = req.body;
     // Проверка хеша
