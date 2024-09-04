@@ -10,13 +10,6 @@ const router = express.Router();
 const uploadsDir = path.join(__dirname, './uploads/avatars');
 require('dotenv').config();
 
-// Настройка multer для загрузки файлов
-const storage = multer.memoryStorage();
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 10 * 1024 * 1024 } // Лимит 10MB
-});
-
 // Запуск приложения 
 router.post("/", async (req, res) => {
   try {
@@ -47,9 +40,10 @@ router.post("/", async (req, res) => {
 });
 
 // Маршрут для загрузки аватара
-router.post('/upload', upload.single('avatar'), async (req, res) => {
+router.post('/upload', async (req, res) => {
+  console.log('loading img');
   try {
-    console.log('loading img');
+    
 
     // Проверка, загружен ли файл
     if (!req.file) {
