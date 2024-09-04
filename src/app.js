@@ -15,8 +15,11 @@ app.use((req, res, next) => {
   next();
 }); 
 
-app.use(cookieParser());
+
+const upload = multer({ dest: 'uploads/' });
+app.use(upload.single('file'));
 app.use("/api/users/upload", require("./routes/foto"))
+app.use(cookieParser());
 app.use(express.json({ limit: '50mb' })); // Увеличьте лимит в зависимости от ваших нужд
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use('/dist', express.static(path.join(__dirname, '../dist')));
