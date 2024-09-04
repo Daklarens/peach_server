@@ -1,55 +1,69 @@
 const express = require("express");
 const path = require('path');
+const fs = require('fs');
+const multer = require('multer');
 const FileService = require('../file');
-const UserService = require('../services/servicesUser')
-const service = new UserService.UserService()
-const {verifyTelegramData, createToken, verifyAndRefreshToken} = require('../verify');
+const UserService = require('../services/servicesUser');
+const service = new UserService.UserService();
+const { verifyTelegramData, createToken, verifyAndRefreshToken } = require('../verify');
 const router = express.Router();
 const uploadsDir = path.join(__dirname, './uploads/avatars');
 require('dotenv').config();
 
-//Запуск приложения 
+// Настройка multer для загрузки файлов
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 10 * 1024 * 1024 } // Лимит 10MB
+});
+
+// Запуск приложения 
 router.post("/", async (req, res) => {
-  try{
-    const data = req.body
-  //Проверка хеша
-  const isValid = verifyTelegramData(data.initData);
-  if(isValid.hash){
-    //парсим строку юзера
-    const dataStr = isValid.data.user
-      .replace(/"([^"]+)":/g, '$1:'); 
-    const jsonString = dataStr.replace(/(\w+):/g, '"$1":'); // Добавляем кавычки вокруг ключей
-    const dataUser = JSON.parse(jsonString);
-    //Сервис для авторизации данных пользователя 
-    const userCheck = await service.userLoader(dataUser)
-    //Создание токена с записью данных польователя
-    const token = createToken(dataUser, process.env.JWT)
-    //Отправка всех данных
-    const outData = {...userCheck, token}
-    console.log(outData)
-    res.send(outData) 
-  }else{
-    res.sendStatus(502)
-  }
+  try {
+    const data = req.body;
+    // Проверка хеша
+    const isValid = verifyTelegramData(data.initData);
+    if (isValid.hash) {
+      // Парсим строку юзера
+      const dataStr = isValid.data.user.replace(/"([^"]+)":/g, '$1:');
+      const jsonString = dataStr.replace(/(\w+):/g, '"$1":'); // Добавляем кавычки вокруг ключей
+      const dataUser = JSON.parse(jsonString);
+      // Сервис для авторизации данных пользователя 
+      const userCheck = await service.userLoader(dataUser);
+      // Создание токена с записью данных пользователя
+      const token = createToken(dataUser, process.env.JWT);
+      // Отправка всех данных
+      const outData = { ...userCheck, token };
+      console.log(outData);
+      res.send(outData);
+    } else {
+      res.sendStatus(502);
+    }
   } catch (error) {
-    console.log('Ошибка при загрузке приложения')
-    console.log(error)
-    res.sendStatus(502)
+    console.log('Ошибка при загрузке приложения');
+    console.log(error);
+    res.sendStatus(502);
   }
 });
 
-router.post('/upload', async (req, res) => {
+// Маршрут для загрузки аватара
+router.post('/upload', upload.single('avatar'), async (req, res) => {
+  console.log('loading img')
   try {
-    const base64Image = req.body.data.avatar;
     const outputDir = path.join(__dirname, '../noPublic/avatars');
 
+    // Парсим JSON строку, переданную в FormData
+    const jsonData = JSON.parse(req.body.data);
+
     // Используем FileService для обработки и сохранения изображения
-    const filename = await FileService.processAndSaveImage(base64Image, outputDir);
+    const filename = await FileService.processAndSaveImage(req.file, outputDir);
 
     console.log('Image processed and saved successfully:', filename);
-    res.status(200).send({ success: true, message: 'Image saved successfully', filename });
+    console.log('Received JSON data:', jsonData);
+
+    res.status(200).send({ success: true, message: 'Image and data saved successfully', filename, jsonData });
   } catch (error) {
-    console.error('Error processing image:', error.message);
+    console.error('Error processing image or data:', error.message);
     res.status(500).send({ success: false, message: error.message });
   }
 });
@@ -68,6 +82,4 @@ router.get('/f1/:filename', (req, res) => {
   });
 });
 
-
 module.exports = router;
-
