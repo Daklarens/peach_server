@@ -17,8 +17,8 @@ router.post('/', async (req, res) => {
             try {
 
                 const userData = JSON.parse(req.body.data);
+                userData.avatar = filename
                 console.log('Данные пользователя:', userData);
-                req.body.data.avatar = filename
                 const dataOut = await service.createAnkets(userData)
                 console.log(dataOut)
 

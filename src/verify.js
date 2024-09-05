@@ -68,7 +68,7 @@ function createToken(userData) {
 }
 //проверка токена и создание нового
 function verifyAndRefreshToken(token, userData) {
-    const secretKey = process.env.JWT_SECRET ;
+    const secretKey = String(process.env.JWT_SECRET) ;
 
     try {
         // Проверяем токен
