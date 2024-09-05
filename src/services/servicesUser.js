@@ -26,6 +26,8 @@ class UserService {
   }
   async createAnkets(anket){
     const {token,...data} = anket
+    console.log('Token User :',token)
+    console.log('User - data :', data)
     const verify = verifyDecode(token)
     const dataUser = await db.find('users',{tid:verify.decoded.id})
     if(dataUser.length >0){
