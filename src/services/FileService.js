@@ -26,8 +26,13 @@ class FileService {
 
     try {
       // Обрабатываем изображение с помощью sharp
-      await sharp(file.path) // Используем путь к сохраненному файлу
-        .metadata() // Получаем метаданные
+      const image = sharp(file.path); // Инициализация sharp с файлом
+      
+      // Получение метаданных (необязательно)
+      const metadata = await image.metadata();
+
+      // Применяем нужные преобразования к изображению
+      await image
         .jpeg({ quality: 80, progressive: true }) // Сжимаем JPEG с качеством 80
         .toFile(filepath); // Сохраняем обработанное изображение
 
