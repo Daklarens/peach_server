@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
                 const userData = JSON.parse(req.body.data);
                 console.log('Данные пользователя:', userData);
                 req.body.data.avatar = filename
-                const dataOut = await service.createAnkets(req.body.data)
+                const dataOut = await service.createAnkets(userData)
                 console.log(dataOut)
 
             } catch (parseError) {
