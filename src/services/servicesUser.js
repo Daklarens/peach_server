@@ -1,5 +1,5 @@
 const db = require("../db");
-const { verifyDecode } = require('../verify');
+const { verifyDecode, createToken } = require('../verify');
 
 class UserService {
   constructor() {}

@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
                 userData.avatar = filename
                 console.log('Данные пользователя:', userData);
                 const dataOut = await service.createAnkets(userData)
-                console.log(dataOut)
+                res.send(dataOut)
 
             } catch (parseError) {
                 console.error('Ошибка парсинга данных пользователя:', parseError);
