@@ -1,4 +1,5 @@
 const db = require("../db");
+const { verifyDecode } = require('../verify');
 
 class UserService {
   constructor() {}
@@ -24,7 +25,21 @@ class UserService {
     return data
   }
   async createAnkets(anket){
+    const {token,...data} = anket
+    const verify = verifyDecode(token)
+    const dataUser = await db.find('users',{tid:verify.decoded.id})
+    if(dataUser.length >0){
+      data.tid = verify.decoded.id
+      await db.insert('anket',data)
+      console.log('Анкета с данными :',data)
+      console.log('создана')
+      //ответом об успехе будет новый токен в котором будут данные о анкете 
+      const newToken = await createToken(data)
+      return {token:newToken}
+    }else{
 
+    }
+    
   }
   async checkAnkets(tid){
     const count = await db.count('ankets',{tid})

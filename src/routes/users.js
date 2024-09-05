@@ -1,11 +1,9 @@
 const express = require("express");
 const path = require('path');
 const fs = require('fs');
-const multer = require('multer');
-const FileService = require('../file');
 const UserService = require('../services/servicesUser');
 const service = new UserService.UserService();
-const { verifyTelegramData, createToken, verifyAndRefreshToken } = require('../verify');
+const { verifyTelegramData, createToken } = require('../verify');
 const router = express.Router();
 const uploadsDir = path.join(__dirname, './uploads/avatars');
 require('dotenv').config();

@@ -52,14 +52,6 @@ function verifyTelegramData(initDataString) {
 }
 //Создание токена 
 function createToken(userData) {
-    // Данные пользователя, которые будут включены в токен
-    const payload = {
-        id: userData.id,
-        username: userData.username,
-        firstName: userData.first_name,
-        lastName: userData.last_name,
-        isPremium: userData.is_premium,
-    };
 
     // Секретный ключ для подписи токена (необходимо хранить в .env)
     const secretKey = String(process.env.JWT_SECRET);
@@ -70,7 +62,7 @@ function createToken(userData) {
     };
 
     // Создаем и подписываем токен
-    const token = jwt.sign(payload, secretKey, options);
+    const token = jwt.sign(userData, secretKey, options);
 
     return token;
 }
@@ -97,4 +89,16 @@ function verifyAndRefreshToken(token, userData) {
     }
 }
 
-module.exports = {verifyTelegramData,createToken,verifyAndRefreshToken};
+function verifyDecode(token) {
+    const secretKey = process.env.JWT_SECRET ;
+    try {
+        // Проверяем токен
+        const decoded = jwt.verify(token, secretKey);
+        return { valid: true, token, decoded }; 
+    } catch (error) {
+        console.error('Ошибка проверки токена:', error.message);
+        return { valid: false, token: null, decoded: null };
+    }
+}
+
+module.exports = {verifyTelegramData,createToken,verifyAndRefreshToken,verifyDecode};
