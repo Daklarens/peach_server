@@ -27,10 +27,8 @@ router.post('/', async (req, res) => {
                 return res.status(400).send('Некорректные данные пользователя');
             }
         } else {
-            console.log('Данные пользователя отсутствуют');
+            res.send({token:false})
         }
-
-        res.send(`Файл ${req.file.originalname} успешно загружен`);
     } catch (error) {
         console.error('Ошибка при обработке загрузки:', error);
         res.status(500).send('Ошибка при обработке запроса');
