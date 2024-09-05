@@ -90,7 +90,7 @@ function verifyAndRefreshToken(token, userData) {
 }
 
 function verifyDecode(token) {
-    const secretKey = process.env.JWT_SECRET ;
+    const secretKey = String(process.env.JWT_SECRET) ;
     try {
         // Проверяем токен
         const decoded = jwt.verify(token, secretKey);
