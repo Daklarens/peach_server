@@ -37,54 +37,7 @@ router.post("/", async (req, res) => {
     res.sendStatus(502);
   }
 });
- /* 
-// Маршрут для загрузки аватара
-router.post('/upload', async (req, res) => {
-  console.log('loading img');
-  try {
-    
 
-    // Проверка, загружен ли файл
-    if (!req.file) {
-        return res.status(400).send('Файл не загружен');
-    }
-
-    // Проверка, если данные пользователя переданы корректно
-    const userData = req.body.data ? JSON.parse(req.body.data) : null;
-
-    if (!userData) {
-        return res.status(400).send('Данные пользователя отсутствуют или некорректны');
-    }
-
-    console.log('Данные пользователя:', userData);
-
-    // Здесь вы можете сохранить данные пользователя и информацию о файле в БД или выполнить другие действия
-
-    res.send(`Файл ${req.file.originalname} успешно загружен и данные пользователя обработаны`);
-} catch (error) {
-    console.error('Ошибка при обработке загрузки:', error);
-    res.status(500).send('Ошибка при обработке запроса');
-}
-try {
-    const outputDir = path.join(__dirname, '../noPublic/avatars');
-
-    // Парсим JSON строку, переданную в FormData
-    const jsonData = JSON.parse(req.body.data);
-
-    // Используем FileService для обработки и сохранения изображения
-    const filename = await FileService.processAndSaveImage(req.file, outputDir);
-
-    console.log('Image processed and saved successfully:', filename);
-    console.log('Received JSON data:', jsonData);
-
-    res.status(200).send({ success: true, message: 'Image and data saved successfully', filename, jsonData });
-  } catch (error) {
-    console.error('Error processing image or data:', error.message);
-    res.status(500).send({ success: false, message: error.message });
-
-
-});
-  }*/
 // Маршрут для получения изображения по имени файла
 router.get('/f1/:filename', (req, res) => {
   const { filename } = req.params;
