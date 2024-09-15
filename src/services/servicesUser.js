@@ -30,7 +30,7 @@ class UserService {
     const dataUser = await db.find('users',{tid:verify.decoded.id})
     if(dataUser.length >0){
       data.tid = verify.decoded.id
-      await db.insert('ankets',...data)
+      await db.insert('ankets',data)
       console.log('Анкета с данными :',data)
       console.log('создана')
       //ответом об успехе будет новый токен в котором будут данные о анкете 
