@@ -5,7 +5,7 @@ const UserService = require('../services/servicesUser');
 const service = new UserService.UserService();
 const { verifyTelegramData, createToken, verifyAndRefreshToken } = require('../verify');
 const router = express.Router();
-const uploadsDir = path.join(__dirname, './uploads/avatars');
+const uploadsDir = path.join(__dirname, '../processed');
 require('dotenv').config();
 
 // Запуск приложения 
