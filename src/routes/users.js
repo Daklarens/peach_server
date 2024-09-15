@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
       const token = createToken(dataUser, process.env.JWT);
       // Отправка всех данных
       const outData = { ...userCheck, token };
-      console.log(outData);
+      console.log('Отправка данных клиенту !!!!!')
       res.send(outData);
     } else {
       res.sendStatus(502);
@@ -42,6 +42,7 @@ router.post('/ankets', async(req,res)=>{
   console.log('Запрос на получение анкет')
   try{
     const data = req.body
+    console.log(data)
     //Проверка токена и получение данных
     const veryfToken = verifyAndRefreshToken(data.token)
     
