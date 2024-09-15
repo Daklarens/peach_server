@@ -49,9 +49,9 @@ router.post('/ankets', async(req,res)=>{
     if(userAnket){
       console.log('Количество анкет :',userAnket.length)
       console.log('Token:',veryfToken.token)
-      return {token:veryfToken.token,data:userAnket}
+      res.send({token:veryfToken.token,data:userAnket})
     }else{
-      return {token:veryfToken.token,data:userAnket}
+      res.send({token:veryfToken.token,data:userAnket})
     }
 
 
