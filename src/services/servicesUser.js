@@ -43,7 +43,6 @@ class UserService {
   }
   async checkAnkets(tid){
     const count = await db.find('ankets',{tid})
-    console.log(count)
     if(count.length > 0){
       return count[0]
     }else{
