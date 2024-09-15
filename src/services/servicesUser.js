@@ -85,6 +85,15 @@ class UserService {
       return {user:false}
     }
   }
+  async getAnketsForUser(tid){
+    const anketUser = await db.find('ankets',{tid})
+    if(anketUser.length === 1){
+      const ankets = await db.find('ankets',{sex:anketUser[0].searchsex})
+      return ankets
+    }else{
+      return false
+    }
+  }
 
 }
 module.exports = {

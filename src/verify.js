@@ -74,7 +74,8 @@ function verifyAndRefreshToken(token, userData) {
         // Проверяем токен
         const decoded = jwt.verify(token, secretKey);
         console.log('Токен действителен:', decoded);
-        return { valid: true, token, decoded }; // Возвращаем токен, если он ещё действителен
+        const newToken = createToken(decoded); 
+        return { valid: true, token:newToken, decoded }; // Возвращаем токен, если он ещё действителен
     } catch (error) {
         if (error.name === 'TokenExpiredError') {
             // Если токен истёк, создаём новый
