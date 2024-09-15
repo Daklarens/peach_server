@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const UserService = require('../services/servicesUser');
 const service = new UserService.UserService();
-const { verifyTelegramData, createToken } = require('../verify');
+const { verifyTelegramData, createToken, verifyAndRefreshToken } = require('../verify');
 const router = express.Router();
 const uploadsDir = path.join(__dirname, './uploads/avatars');
 require('dotenv').config();
@@ -37,6 +37,19 @@ router.post("/", async (req, res) => {
     res.sendStatus(502);
   }
 });
+
+router.post('/ankets', async(req,res)=>{
+  console.log('Запрос на получение анкет')
+  try{
+    const data = req.body
+    //Проверка токена и получение данных
+    const veryfToken = verifyAndRefreshToken(data.token)
+    
+
+  } catch (err){
+
+  }
+})
 
 // Маршрут для получения изображения по имени файла
 router.get('/f1/:filename', (req, res) => {
