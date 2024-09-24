@@ -89,7 +89,7 @@ class UserService {
     const anketUser = await db.find('ankets',{tid})
     if(anketUser.length === 1){
       const ankets = await db.find('ankets',{sex:anketUser[0].searchsex})
-      if (page === 1) {
+      if (page === 0) {
         return ankets.slice(0, 6);  // Отправляем нужную порцию анкет
       } else {
         return ankets.slice(page, 3);  // Отправляем нужную порцию анкет
