@@ -87,12 +87,12 @@ class UserService {
   }
   async getAnketsForUser(tid,page){
     const anketUser = await db.find('ankets',{tid})
-    page = page+2
     if(anketUser.length === 1){
       const ankets = await db.find('ankets',{sex:anketUser[0].searchsex})
       if (page === 0) {
         return ankets.slice(0, 6);  // Отправляем нужную порцию анкет
       } else {
+        page = page+2
         return ankets.slice(page, 3+page);  // Отправляем нужную порцию анкет
       }
     }else{
