@@ -45,7 +45,7 @@ router.post('/ankets', async(req,res)=>{
     console.log(data)
     //Проверка токена и получение данных
     const veryfToken = await verifyAndRefreshToken(data.token)
-    const userAnket = await service.getAnketsForUser(veryfToken.decoded.id)
+    const userAnket = await service.getAnketsForUser(veryfToken.decoded.id,data.page)
     if(userAnket){
       console.log('Количество анкет :',userAnket.length)
       console.log('Token:',veryfToken.token)
