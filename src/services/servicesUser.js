@@ -90,9 +90,9 @@ class UserService {
     if(anketUser.length === 1){
       const ankets = await db.find('ankets',{sex:anketUser[0].searchsex})
       if (page === 1) {
-        return profiles.slice(0, 6);  // Отправляем нужную порцию анкет
+        return ankets.slice(0, 6);  // Отправляем нужную порцию анкет
       } else {
-        return profiles.slice(page, 3);  // Отправляем нужную порцию анкет
+        return ankets.slice(page, 3);  // Отправляем нужную порцию анкет
       }
     }else{
       return false
