@@ -59,6 +59,7 @@ router.post('/ankets', async(req,res)=>{
       res.send({token:'0000000000',data:'0000000000'})
     }
   } catch (err){
+    console.log('kekekekekekek')
     res.send({token:'0000000000',data:'0000000000'})
   }
 })
