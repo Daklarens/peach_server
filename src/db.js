@@ -51,10 +51,11 @@ const connect = async () =>{
         console.log(`Подключение для внесения нескольких данных [${coll}]`)
  
         const employees = MongoDBclient.db(process.env.NAMEDB).collection(coll)
-        await employees.insertMany(data)
+        const data = await employees.insertMany(data)
  
         await MongoDBclient.close()
         console.log(`Данные внесены! Отключение от базы [${coll}]`)
+        return data
     } catch (e) {
         console.log(e)
     }
