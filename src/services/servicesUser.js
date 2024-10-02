@@ -100,14 +100,16 @@ class UserService {
     }
   }
   async actionsAnkets(tid, arr){
-    console.log(arr)
-     return arr.map(action => ({
-      uid: tid,
-      tid: action.tid,
-      action: action.action
-    }));
-    console.log(arr)
-
+    if(arr === false){
+      return arr
+    }else{
+      arr.map(action => ({
+        uid: tid,
+        tid: action.tid,
+        action: action.action
+      }));
+      console.log(arr)
+    }
   }
 
 }
