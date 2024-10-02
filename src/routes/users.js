@@ -48,6 +48,7 @@ router.post('/ankets', async(req,res)=>{
     console.log(veryfToken.token)
     if(veryfToken.token != null){
       const actionsA = await service.actionsAnkets(veryfToken.decoded.id,data.actions)
+      console.log(actionsA)
       const userAnket = await service.getAnketsForUser(veryfToken.decoded.id,data.page)
       if(userAnket){
         console.log('Количество анкет :',userAnket.length)

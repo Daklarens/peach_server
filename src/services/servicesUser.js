@@ -100,7 +100,7 @@ class UserService {
     }
   }
   async actionsAnkets(tid, arr){
-     arr.map(action => ({
+     return arr.map(action => ({
       uid: tid,
       tid: action.tid,
       action: action.action
