@@ -99,6 +99,15 @@ class UserService {
       return false
     }
   }
+  async actionsAnkets(tid, arr){
+     arr.map(action => ({
+      uid: tid,
+      tid: action.tid,
+      action: action.action
+    }));
+    console.log(arr)
+
+  }
 
 }
 module.exports = {
