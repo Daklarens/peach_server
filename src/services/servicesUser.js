@@ -108,6 +108,7 @@ class UserService {
         tid: action.tid,
         action: action.action
       }));
+      console.log('lellel')
       console.log(arr)
     }
   }
