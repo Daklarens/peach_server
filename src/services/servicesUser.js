@@ -100,6 +100,7 @@ class UserService {
     }
   }
   async actionsAnkets(tid, arr){
+    console.log(arr)
      return arr.map(action => ({
       uid: tid,
       tid: action.tid,
