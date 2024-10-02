@@ -108,7 +108,8 @@ class UserService {
         tid: action.tid,
         action: action.action
       }));
-      console.log(updatedArr)
+      const adder = await db.insertAll('actions',updatedArr)
+      console.log(adder)
     }
   }
 
