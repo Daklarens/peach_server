@@ -103,13 +103,12 @@ class UserService {
     if(arr === false){
       return arr
     }else{
-      arr.map(action => ({
+      const updatedArr = arr.map(action => ({
         uid: tid,
         tid: action.tid,
         action: action.action
       }));
-      console.log('lellel')
-      console.log(arr)
+      console.log(updatedArr)
     }
   }
 
