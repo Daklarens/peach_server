@@ -26,13 +26,11 @@ router.post("/", async (req, res) => {
       const token = createToken(dataUser, process.env.JWT);
       // Отправка всех данных
       const outData = { ...userCheck, token };
-      console.log('Отправка данных клиенту !!!!!')
       res.send(outData);
     } else {
       res.sendStatus(502);
     }
   } catch (error) {
-    console.log('Ошибка при загрузке приложения');
     console.log(error);
     res.sendStatus(502);
   }
@@ -42,16 +40,12 @@ router.post('/ankets', async(req,res)=>{
   console.log('Запрос на получение анкет')
   try{
     const data = req.body
-    console.log(data)
     //Проверка токена и получение данных
     const veryfToken = await verifyAndRefreshToken(data.token)
-    console.log(veryfToken.token)
     if(veryfToken.token != null){
       const actionsA = await service.actionsAnkets(veryfToken.decoded.id,data.actions)
-      console.log(actionsA)
       const userAnket = await service.getAnketsForUser(veryfToken.decoded.id,data.page)
       if(userAnket){
-        console.log('Количество анкет :',userAnket.length)
         res.send({token:veryfToken.token,data:userAnket})
       }else{
         res.send({token:veryfToken.token,data:userAnket})
