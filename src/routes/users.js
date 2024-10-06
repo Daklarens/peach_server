@@ -4,6 +4,7 @@ const fs = require('fs');
 const UserService = require('../services/servicesUser');
 const service = new UserService.UserService();
 const { verifyTelegramData, createToken, verifyAndRefreshToken } = require('../verify');
+const { update } = require("lodash");
 const router = express.Router();
 const uploadsDir = path.join(__dirname, '../processed');
 require('dotenv').config();
@@ -47,9 +48,9 @@ router.post('/ankets', async(req,res)=>{
       const actionsA = await service.actionsAnkets(veryfToken.decoded.id,data.actions)
       const userAnket = await service.getAnketsForUser(veryfToken.decoded.id,data.page)
       if(userAnket){
-        res.send({token:veryfToken.token,data:userAnket})
+        res.send({token:veryfToken.token,data:userAnket, update:actionsA})
       }else{
-        res.send({token:veryfToken.token,data:userAnket})
+        res.send({token:veryfToken.token,data:userAnket, update:actionsA})
       }
     }else{
       res.send({token:'0000000000',data:'0000000000'})

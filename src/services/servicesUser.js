@@ -106,12 +106,18 @@ class UserService {
     if(arr === false){
       return arr
     }else{
+      const likedItems = arr
+      .filter(item => item.action === true)  // Отфильтровываем элементы с лайками
+      .map(item => item.tid);
+      const check = await db.find('actions',{uid:{$in:likedItems},tid})
       const updatedArr = arr.map(action => ({
         uid: tid,
         tid: action.tid,
         action: action.action
       }));
       await db.insertAll('actions',updatedArr)
+      //Подключить бота для оповещения
+      return check.length || false
     }
   }
 
