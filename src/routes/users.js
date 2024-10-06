@@ -43,6 +43,7 @@ router.post('/ankets', async(req,res)=>{
     //Проверка токена и получение данных
     const veryfToken = await verifyAndRefreshToken(data.token)
     if(veryfToken.token != null){
+      console.log(data.actions)
       const actionsA = await service.actionsAnkets(veryfToken.decoded.id,data.actions)
       const userAnket = await service.getAnketsForUser(veryfToken.decoded.id,data.page)
       if(userAnket){
