@@ -122,11 +122,12 @@ class UserService {
   }
   async matchAnkets(tid){
     //Представим что мы собрали массив id пользователей с которыми у нас взаимно
-    const arrUsers = [6,1,3,5,4,2]
-    console.log(arrUsers)
-    //Делаем поиск по этим id 
-    const matchUsers = await db.find('ankets',{tid:{$in:{...arrUsers}}})
-    return matchUsers || false
+    const arrUsers = [6, 1, 3, 5, 4, 2];
+    console.log(arrUsers);
+    // Делаем поиск по этим id 
+    const matchUsers = await db.find('ankets', { tid: { $in: arrUsers } });
+
+    return matchUsers || false;
   }
 
 }
