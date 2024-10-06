@@ -123,11 +123,18 @@ class UserService {
   async matchAnkets(tid){
     //Представим что мы собрали массив id пользователей с которыми у нас взаимно
     const arrUsers = [6, 1, 3, 5, 4, 2];
+    // Переворачиваем массив для сортировки в обратном порядке
+    const reversedArrUsers = arrUsers.reverse();
     console.log(arrUsers);
     // Делаем поиск по этим id 
     const matchUsers = await db.find('ankets', { tid: { $in: arrUsers } });
 
-    return matchUsers || false;
+    const sortedMatchUsers = matchUsers.sort((a, b) => {
+      // Используем индексы в массиве reversedArrUsers для сортировки
+      return reversedArrUsers.indexOf(a.tid) - reversedArrUsers.indexOf(b.tid);
+    });
+
+    return sortedMatchUsers || false;
   }
 
 }
