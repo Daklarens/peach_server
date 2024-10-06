@@ -61,6 +61,29 @@ router.post('/ankets', async(req,res)=>{
   }
 })
 
+router.post('/match', async(req,res)=>{
+  console.log('Запрос на получение взаимных анкет')
+  try{
+    const data = req.body
+    //Проверка токена и получение данных
+    const veryfToken = await verifyAndRefreshToken(data.token)
+    if(veryfToken.token != null){
+      // если токен правильный 
+      const getMatchUsers = await service.matchAnkets(veryfToken.decoded.id)
+      if(getMatchUsers){
+        res.send({token:veryfToken.token,data:getMatchUsers})
+      }else{
+        res.send({token:veryfToken.token,data:false})
+      }
+    }else{
+      res.send({token:'0000000000',data:false})
+    }
+  } catch (err){
+    console.log(err)
+    res.send({token:'0000000000',data:false})
+  }
+})
+
 // Маршрут для получения изображения по имени файла
 router.get('/f1/:filename', (req, res) => {
   const { filename } = req.params;
