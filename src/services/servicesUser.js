@@ -125,7 +125,7 @@ class UserService {
     const arrUsers = [6,1,3,5,4,2]
     console.log(arrUsers)
     //Делаем поиск по этим id 
-    const matchUsers = await db.find('ankets',{tid:{$in:{arrUsers}}})
+    const matchUsers = await db.find('ankets',{tid:{$in:{...arrUsers}}})
     return matchUsers || false
   }
 
