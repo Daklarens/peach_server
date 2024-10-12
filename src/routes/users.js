@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
       const token = createToken(dataUser, process.env.JWT);
       // Отправка всех данных
       console.log(userCheck)
-      const outData = { userCheck, token };
+      const outData = { ...userCheck, token };
       res.send(outData);
     } else {
       res.sendStatus(502);
