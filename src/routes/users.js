@@ -1,13 +1,15 @@
 const express = require("express");
 const path = require('path');
 const fs = require('fs');
+const TeleBot = require('telebot');
 const UserService = require('../services/servicesUser');
 const service = new UserService.UserService();
 const { verifyTelegramData, createToken, verifyAndRefreshToken } = require('../verify');
-const { update } = require("lodash");
+//const { update } = require("lodash");
 const router = express.Router();
 const uploadsDir = path.join(__dirname, '../processed');
 require('dotenv').config();
+const bot = new TeleBot({token: process.env.TOKEN,usePlugins: ['askUser']});
 
 // Запуск приложения 
 router.post("/", async (req, res) => {
@@ -26,6 +28,7 @@ router.post("/", async (req, res) => {
       // Создание токена с записью данных пользователя
       const token = createToken(dataUser, process.env.JWT);
       // Отправка всех данных
+      console.log(userCheck)
       const outData = { ...userCheck, token };
       res.send(outData);
     } else {
@@ -97,5 +100,12 @@ router.get('/f1/:filename', (req, res) => {
     res.sendFile(filepath);
   });
 });
+
+router.post('/getPeachUser', (req,res)=>{
+  const data = req.body
+  bot.sendMessage(data.id,`Вы выбрали пользователя с id ${data.tid}`)
+})
+
+bot.start();
 
 module.exports = router;
