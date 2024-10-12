@@ -9,7 +9,7 @@ const { verifyTelegramData, createToken, verifyAndRefreshToken } = require('../v
 const router = express.Router();
 const uploadsDir = path.join(__dirname, '../processed');
 require('dotenv').config();
-const bot = new TeleBot({token: process.env.TOKEN,usePlugins: ['askUser']});
+const bot = new TeleBot({token: process.env.TELEGRAM_BOT_TOKEN,usePlugins: ['askUser']});
 
 // Запуск приложения 
 router.post("/", async (req, res) => {
