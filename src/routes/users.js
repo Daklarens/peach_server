@@ -102,9 +102,9 @@ router.get('/f1/:filename', (req, res) => {
 });
 
 router.post('/getPeachUser', (req,res)=>{
-  const data = req.body
+  const data = req.body.data
   console.log(data)
-  //bot.sendMessage(data.id,`Вы выбрали пользователя с id ${data.tid}`)
+  bot.sendMessage(data.tid,`Вы выбрали пользователя с id ${data.ttid}`)
 })
 
 bot.start();
