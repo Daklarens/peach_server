@@ -141,9 +141,11 @@ class UserService {
       return false;
     }
     const reversedArrUsers = arrUsers.reverse();
-    const matchUsers = await db.find('ankets', { uid: { $in: reversedArrUsers }, dbId:tid, action:true });
+    const matchUsers = await db.find('actions', { uid: { $in: reversedArrUsers }, dbId:tid, action:true });
     console.log(matchUsers)
-    const sortedMatchUsers = matchUsers.sort((a, b) => {
+    const matchUsersID = matchUsers.map(item => item.uid);
+    const getAnkets = await db.find('ankets', {tid:{$in:matchUsersID}})
+    const sortedMatchUsers = getAnkets.sort((a, b) => {
       return reversedArrUsers.indexOf(a.tid) - reversedArrUsers.indexOf(b.tid);
     });
     return sortedMatchUsers.length > 0 ? sortedMatchUsers : false;
