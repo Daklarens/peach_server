@@ -92,7 +92,7 @@ class UserService {
       const arrActions = await db.find('actions',{uid:tid})
       console.log(arrActions)
       //формируем из запроса массив 
-      const tidArray = arrActions.map(profile => profile.tid);
+      const tidArray = arrActions.map(profile => profile.dbId);
       //удаляем повторения
       const uniqueTids = [...new Set(tidArray)];
       //ищем анкеты которые не соответствуют массиву 
