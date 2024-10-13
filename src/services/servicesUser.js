@@ -87,6 +87,8 @@ class UserService {
   }
   async getAnketsForUser(tid,page){
     const anketUser = await db.find('ankets',{tid})
+    console.log('kekekekekkek')
+    console.log(tid)
     if(anketUser.length === 1){
       //ищем все действия пользователя
       const arrActions = await db.find('actions',{uid:tid})
