@@ -88,9 +88,13 @@ class UserService {
   async getAnketsForUser(tid,page){
     const anketUser = await db.find('ankets',{tid})
     if(anketUser.length === 1){
+      //ищем все действия пользователя
       const arrActions = await db.find('actions',{uid:tid})
+      //формируем из запроса массив 
       const tidArray = arrActions.map(profile => profile.tid);
+      //удаляем повторения
       const uniqueTids = [...new Set(tidArray)];
+      //ищем анкеты которые не соответствуют массиву 
       const ankets = await db.find('ankets',{sex:anketUser[0].searchsex,tid:{ $nin: uniqueTids }})
       if (page === 0) {
         return ankets.slice(0, 6);  // Отправляем нужную порцию анкет
