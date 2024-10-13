@@ -97,7 +97,7 @@ class UserService {
       const uniqueTids = [...new Set(tidArray)];
       //ищем анкеты которые не соответствуют массиву 
       console.log(uniqueTids)
-      const ankets = await db.find('ankets',{sex:anketUser[0].searchsex,dbId:{ $nin: uniqueTids }})
+      const ankets = await db.find('ankets',{sex:anketUser[0].searchsex,tid:{ $nin: uniqueTids }})
       console.log(ankets)
       if (page === 0) {
         return ankets.slice(0, 6);  // Отправляем нужную порцию анкет
