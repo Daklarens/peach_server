@@ -90,6 +90,7 @@ class UserService {
     if(anketUser.length === 1){
       //ищем все действия пользователя
       const arrActions = await db.find('actions',{uid:tid})
+      console.log(arrActions)
       //формируем из запроса массив 
       const tidArray = arrActions.map(profile => profile.tid);
       //удаляем повторения
