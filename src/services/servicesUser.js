@@ -85,27 +85,46 @@ class UserService {
       return {user:false}
     }
   }
-  async getAnketsForUser(tid,page){
-    const anketUser = await db.find('ankets',{tid})
-    if(anketUser.length === 1){
-      //ищем все действия пользователя
-      const arrActions = await db.find('actions',{uid:tid})
-      console.log(arrActions)
-      //формируем из запроса массив 
+  async  getAnketsForUser(tid, page) {
+    // Ищем пользователя по tid
+    const anketUser = await db.find('ankets', { tid });
+  
+    if (anketUser.length === 1) {
+      // Ищем все действия пользователя (взаимодействия с анкетами)
+      const arrActions = await db.find('actions', { uid: tid });
+      
+      // Формируем массив просмотренных анкет по dbId
       const tidArray = arrActions.map(profile => profile.dbId);
-      //удаляем повторения
+  
+      // Удаляем дубликаты
       const uniqueTids = [...new Set(tidArray)];
-      //ищем анкеты которые не соответствуют массиву 
-      console.log(uniqueTids)
-      const ankets = await db.find('ankets',{sex:anketUser[0].searchsex,tid:{ $nin: uniqueTids }})
-      console.log(ankets)
+  
+      // Ищем анкеты, которые пользователь еще не видел
+      const ankets = await db.find('ankets', {
+        sex: anketUser[0].searchsex,
+        tid: { $nin: uniqueTids }
+      });
+  
+      console.log(ankets); // Лог анкет, которые еще не просмотрены
+  
+      // Логика выдачи анкет в зависимости от страницы
       if (page === 0) {
-        return ankets.slice(0, 6);  // Отправляем нужную порцию анкет
+        // Первый запрос — выдаем 6 анкет
+        return ankets.slice(0, 6);  
+      } else if (page === 1) {
+        // Второй запрос — пропускаем первые 3 анкеты, выдаем следующие 3
+        if (ankets.length > 3) {
+          return ankets.slice(3, 6); // Возвращаем анкеты с 4-й по 6-ю
+        } else {
+          return false; // Если анкет меньше 3, ничего больше не возвращаем
+        }
       } else {
-        return ankets.slice(0, 3);// Отправляем нужную порцию анкет
+        // Если больше запросов нет — возвращаем false
+        return false;
       }
-    }else{
-      return false
+    } else {
+      // Если пользователь не найден
+      return false;
     }
   }
   async actionsAnkets(tid, arr){
