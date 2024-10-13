@@ -95,8 +95,7 @@ class UserService {
       if (page === 0) {
         return ankets.slice(0, 6);  // Отправляем нужную порцию анкет
       } else {
-        page = page+2
-        return ankets.slice(page, 3+page);  // Отправляем нужную порцию анкет
+        return ankets.slice(0, 3);// Отправляем нужную порцию анкет
       }
     }else{
       return false
