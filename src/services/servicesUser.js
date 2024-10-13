@@ -106,43 +106,33 @@ class UserService {
     if(arr === false){
       return arr
     }else{
-      console.log(arr)
       const likedItems = arr
       .filter(item => item.action === true)  // Отфильтровываем элементы с лайками
       .map(item => item.tid);
-      console.log(likedItems)
+      //поиск анкет которые лайкнули этого пользователя
       const check = await db.find('actions',{uid:{$in:likedItems},tid})
       const updatedArr = arr.map(action => ({
         uid: tid,
-        tid: action.tid,
+        dbId: action.tid,
         action: action.action
       }));
-      console.log(updatedArr)
       await db.insertAll('actions',updatedArr)
-      //Подключить бота для оповещения
+      //Подключить бота для оповещения для других пользователей
       return check.length || false
     }
   }
   async matchAnkets(tid){
-    //Представим что мы собрали массив id пользователей с которыми у нас взаимно
-    const arrUsers = [6, 1, 3, 5, 4, 2];
-    //ищем Анкеты которые Мы лайкнули
-    //const findIdUsers = await db.find('actions',{})
-    //Проверяем сравнением id анкет c определенными параметрами true и tid
-
-
-    // Переворачиваем массив для сортировки в обратном порядке
+    const likedAnkets = await db.find('actions', { uid: tid, action: true });
+    const arrUsers = likedAnkets.map(item => item.tid);
+    if (arrUsers.length === 0) {
+      return false;
+    }
     const reversedArrUsers = arrUsers.reverse();
-    console.log(arrUsers);
-    // Делаем поиск по этим id 
-    const matchUsers = await db.find('ankets', { tid: { $in: arrUsers } });
-
+    const matchUsers = await db.find('ankets', { dbId: { $in: reversedArrUsers }, action:true });
     const sortedMatchUsers = matchUsers.sort((a, b) => {
-      // Используем индексы в массиве reversedArrUsers для сортировки
       return reversedArrUsers.indexOf(a.tid) - reversedArrUsers.indexOf(b.tid);
     });
-
-    return sortedMatchUsers || false;
+    return sortedMatchUsers.length > 0 ? sortedMatchUsers : false;
   }
 
 }
