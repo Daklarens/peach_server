@@ -104,7 +104,7 @@ router.get('/f1/:filename', (req, res) => {
 router.post('/getPeachUser', (req,res)=>{
   const data = req.body.data
   console.log(data)
-  bot.sendMessage(data.tid,`Вы выбрали пользователя с id <a href="tg://user?id=783634711">John Doe</a>${data.ttid}`,{parseMode:'html'})
+  bot.sendMessage(data.tid,`Вы выбрали пользователя с id <a href="tg://user?id=${data.ttid}">${data.name}</a>`,{parseMode:'html'})
 })
 
 bot.start();
