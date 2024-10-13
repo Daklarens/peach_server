@@ -106,15 +106,18 @@ class UserService {
     if(arr === false){
       return arr
     }else{
+      console.log(arr)
       const likedItems = arr
       .filter(item => item.action === true)  // Отфильтровываем элементы с лайками
       .map(item => item.tid);
+      console.log(likedItems)
       const check = await db.find('actions',{uid:{$in:likedItems},tid})
       const updatedArr = arr.map(action => ({
         uid: tid,
         tid: action.tid,
         action: action.action
       }));
+      console.log(updatedArr)
       await db.insertAll('actions',updatedArr)
       //Подключить бота для оповещения
       return check.length || false
@@ -123,6 +126,11 @@ class UserService {
   async matchAnkets(tid){
     //Представим что мы собрали массив id пользователей с которыми у нас взаимно
     const arrUsers = [6, 1, 3, 5, 4, 2];
+    //ищем Анкеты которые Мы лайкнули
+    //const findIdUsers = await db.find('actions',{})
+    //Проверяем сравнением id анкет c определенными параметрами true и tid
+
+
     // Переворачиваем массив для сортировки в обратном порядке
     const reversedArrUsers = arrUsers.reverse();
     console.log(arrUsers);
