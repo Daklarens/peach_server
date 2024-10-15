@@ -51,6 +51,8 @@ class UserService {
   }
   async makerloader(user){
     const getData = await this.getInfoUser(user.id)
+    console.log(user)
+    console.log(getData)
     const countUser = await db.count('users')
     if(getData){
       if(getData === user){
