@@ -98,7 +98,7 @@ class UserService {
         sex: anketUser[0].searchsex,
         tid: { $nin: uniqueTids }
       });
-      console.log(ankets); // Лог анкет, которые еще не просмотрены
+      //console.log(ankets); // Лог анкет, которые еще не просмотрены
       if (page === 0) {
         // Первый запрос — выдаем 6 анкет
         return ankets.slice(0, 6);  

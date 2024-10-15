@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
       // Создание токена с записью данных пользователя
       const token = createToken(dataUser, process.env.JWT);
       // Отправка всех данных
-      console.log(userCheck)
+      //console.log(userCheck)
       const outData = { ...userCheck, token };
       res.send(outData);
     } else {
