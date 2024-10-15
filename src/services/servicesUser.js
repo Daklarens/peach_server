@@ -51,9 +51,6 @@ class UserService {
   }
   async makerloader(user){
     const getData = await this.getInfoUser(user.id)
-    console.log(user)
-    console.log(getData)
-    const countUser = await db.count('users')
     if(getData){
       if(getData === user){
         console.log('Данные пользователя сходятся tid: ', user.id)
@@ -81,6 +78,8 @@ class UserService {
     const login = await this.makerloader(user)
     //Проверкеа есть ли у пользователя анкета
     const anket = await this.checkAnkets(user.id)
+    console.log('------------')
+    console.log(anket)
     if(login && anket){
       return {user:anket}
     }else{
