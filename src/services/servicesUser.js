@@ -66,7 +66,6 @@ class UserService {
       //Регистрация данных пользователя
       console.log('Регистрация пользователя tid: ', user.id)
       user.tid = user.id
-      user.id = countUser+1
       await this.createUser(user)
       return true
     }
