@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Градиент для фона -->
+  <defs>
+    <radialGradient id="bg-gradient" cx="50%" cy="50%" r="70%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color: #fef6e4;" />
+      <stop offset="100%" style="stop-color: #ffd6c1;" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Фон с градиентом -->
+  <rect width="400" height="400" fill="url(#bg-gradient)" rx="20" />
+
+  <!-- Полный персик -->
+  <circle cx="80" cy="100" r="40" fill="url(#peach-gradient)" />
+  
+  <!-- Половинка персика -->
+  <path d="M320,250 a40,40 0 1,0 -80,0 a40,40 0 1,0 80,0" fill="url(#half-peach-gradient)" />
+
+  <!-- Нарезанный персик -->
+  <path d="M220,150 l30,0 l-15,30 l-15,-30 z" fill="url(#sliced-peach-gradient)" />
+
+  <!-- Другие персики для мелких элементов -->
+  <circle cx="320" cy="100" r="20" fill="url(#peach-gradient)" />
+  <circle cx="80" cy="300" r="30" fill="url(#peach-gradient)" />
+  <circle cx="200" cy="350" r="15" fill="url(#half-peach-gradient)" />
+
+  <!-- Градиенты для персиков -->
+  <defs>
+    <radialGradient id="peach-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color: #ffa07a;" />
+      <stop offset="100%" style="stop-color: #ff6347;" />
+    </radialGradient>
+    <radialGradient id="half-peach-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color: #ffdab9;" />
+      <stop offset="100%" style="stop-color: #ff6347;" />
+    </radialGradient>
+    <radialGradient id="sliced-peach-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color: #ff9966;" />
+      <stop offset="100%" style="stop-color: #ff6347;" />
+    </radialGradient>
+  </defs>
+</svg>
