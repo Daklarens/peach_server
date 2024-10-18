@@ -10,7 +10,7 @@ const router = express.Router();
 const uploadsDir = path.join(__dirname, '../processed');
 require('dotenv').config();
 const bot = new TeleBot({token: process.env.TELEGRAM_BOT_TOKEN,usePlugins: ['askUser']});
-
+bot.on('/start', msg=>{bot.sendMessage(msg.from.id,'Приветствую!\nТы можешь протестировать приложение нажав на кнопку "peach"\n<a href="https://t.me/+cyf3SRSBm2k4NTky">Наш чат</a>',{parseMode:'html'})})
 // Запуск приложения 
 router.post("/", async (req, res) => {
   console.log('Загрузка приложения')
