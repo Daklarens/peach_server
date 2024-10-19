@@ -139,11 +139,9 @@ class UserService {
       return false;
     }
     const allMeLikes = await db.find('actions',{uid:{$nin: arrUsers },dbId:tid, action:true});
-    if(allMeLikes.length >0){
-      const otherMeLikes = likedAnkets.map(item => item.uid);
-      const allMeLikes = await db.find('ankets',{tid:{$in: otherMeLikes}})
-      const reversedArrMeLikes = allMeLikes.reverse();
-    }
+    const otherMeLikes = likedAnkets.map(item => item.uid);
+    const allMeLikess = await db.find('ankets',{tid:{$in: otherMeLikes}})
+    const reversedArrMeLikes = allMeLikess.reverse();
     
     const reversedArrUsers = arrUsers.reverse();
     const matchUsers = await db.find('actions', { uid: { $in: reversedArrUsers }, dbId:tid, action:true });
