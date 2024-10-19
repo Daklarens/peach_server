@@ -148,7 +148,7 @@ class UserService {
     return sortedMatchUsers.length > 0 ? sortedMatchUsers : false;
   }
   async getMeLikes(tid){
-    return false
+    return []
   }
 
 }
