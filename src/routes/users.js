@@ -49,6 +49,10 @@ router.post('/ankets', async(req,res)=>{
     if(veryfToken.token != null){
       console.log(data.actions)
       const actionsA = await service.actionsAnkets(veryfToken.decoded.id,data.actions)
+      if(actionsA){
+        if(actionsA.match.length > 0){await service.sendMessageToUsers(actionsA.match,'У вас образовалась взаимная симпатия 💞. Откройте приложение для просмотра',bot)}
+        if(actionsA.like.length > 0){await service.sendMessageToUsers(actionsA.like,'Вам поставили 💖')}
+      }
       const userAnket = await service.getAnketsForUser(veryfToken.decoded.id,data.page)
       if(userAnket){
         res.send({token:veryfToken.token,data:userAnket, update:actionsA})
@@ -103,9 +107,11 @@ router.get('/f1/:filename', (req, res) => {
   });
 });
 
-router.post('/getPeachUser', (req,res)=>{
+router.post('/getPeachUser', async(req,res)=>{
   const data = req.body.data
-  bot.sendMessage(data.tid,`Теперь вы можете начать общение с <a href="tg://user?id=${data.ttid}">${data.ancetName}</a>`,{parseMode:'html'})
+  const getter = await service.getInfoUser(data.ttid)
+  bot.sendMessage(data.tid,`Теперь вы можете начать общение с <a href="tg://user?id=${data.ttid}">${data.ancetName}</a>\n@${getter[0].username}`,{parseMode:'html'})
+  res.sendStatus(200)
 })
 
 bot.start();

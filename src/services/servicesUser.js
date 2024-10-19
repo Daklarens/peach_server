@@ -128,11 +128,8 @@ class UserService {
         action: action.action
       }));
       await db.insertAll('actions',updatedArr)
-      console.log('00000000000')
-      console.log(likedItems)
-      console.log(check)
       //Подключить бота для оповещения для других пользователей
-      return check.length || false
+      return {like:likedItems, match:check} || false
     }
   }
   async matchAnkets(tid){
@@ -159,7 +156,19 @@ class UserService {
     const reversedArrUsers = getAnkets.reverse();
     return reversedArrUsers || []
   }
-
+  async sendMessageToUsers(userIds, messageText, bot){
+    userIds.forEach(userId => {
+      if(userId > 1000){
+      bot.sendMessage(userId, messageText)
+        .then(() => {
+          console.log(`Сообщение успешно отправлено пользователю с ID ${userId}`);
+        })
+        .catch(error => {
+          console.error(`Ошибка при отправке сообщения пользователю с ID ${userId}:`, error.message);
+        });
+      }
+    });
+  }
 }
 module.exports = {
     UserService,
