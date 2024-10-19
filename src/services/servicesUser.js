@@ -148,7 +148,13 @@ class UserService {
     return sortedMatchUsers.length > 0 ? sortedMatchUsers : false;
   }
   async getMeLikes(tid){
-    return []
+    const myLikes = await db.find('actions',{uid:tid,action:true})
+    const arrUsers = myLikes.map(item => item.dbId);
+    const meLike = await db.find('actions',{uid:{$nin:arrUsers}, dbId:tid, action:true})
+    const arrUsersLikeMe = likedAnkets.map(item => item.uid);
+    const getAnkets = await db.find('ankets', {tid:{$in:arrUsersLikeMe}})
+    const reversedArrUsers = getAnkets.reverse();
+    return reversedArrUsers || []
   }
 
 }
