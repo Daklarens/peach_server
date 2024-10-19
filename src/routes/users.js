@@ -49,6 +49,8 @@ router.post('/ankets', async(req,res)=>{
     if(veryfToken.token != null){
       console.log(data.actions)
       const actionsA = await service.actionsAnkets(veryfToken.decoded.id,data.actions)
+      console.log('------')
+      console.log(actionsA)
       const userAnket = await service.getAnketsForUser(veryfToken.decoded.id,data.page)
       if(userAnket){
         res.send({token:veryfToken.token,data:userAnket, update:actionsA})
