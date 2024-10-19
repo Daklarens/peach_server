@@ -73,10 +73,10 @@ router.post('/match', async(req,res)=>{
     if(veryfToken.token != null){
       // если токен правильный 
       const getMatchUsers = await service.matchAnkets(veryfToken.decoded.id)
-      if(getMatchUsers){
-        res.send({token:veryfToken.token,data:getMatchUsers})
+      if(getMatchUsers.match || getMatchUsers.myLikes){
+        res.send({token:veryfToken.token,data:getMatchUsers.match,myLike:etMatchUsers.myLikes})
       }else{
-        res.send({token:veryfToken.token,data:false})
+        res.send({token:veryfToken.token,data:false,myLike:false})
       }
     }else{
       res.send({token:'0000000000',data:false})

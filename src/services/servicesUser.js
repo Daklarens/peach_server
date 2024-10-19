@@ -134,21 +134,25 @@ class UserService {
   }
   async matchAnkets(tid){
     const likedAnkets = await db.find('actions', { uid: tid, action: true });
-    console.log(likedAnkets)
     const arrUsers = likedAnkets.map(item => item.dbId);
-    console.log(arrUsers)
     if (arrUsers.length === 0) {
       return false;
     }
+    const allMeLikes = await db.find('actions',{uid:{$nin: arrUsers },dbId:tid, action:true});
+    if(allMeLikes.length >0){
+      const otherMeLikes = likedAnkets.map(item => item.uid);
+      const allMeLikes = await db.find('ankets',{tid:{$in: otherMeLikes}})
+      const reversedArrMeLikes = allMeLikes.reverse();
+    }
+    
     const reversedArrUsers = arrUsers.reverse();
     const matchUsers = await db.find('actions', { uid: { $in: reversedArrUsers }, dbId:tid, action:true });
-    console.log(matchUsers)
     const matchUsersID = matchUsers.map(item => item.uid);
     const getAnkets = await db.find('ankets', {tid:{$in:matchUsersID}})
     const sortedMatchUsers = getAnkets.sort((a, b) => {
       return reversedArrUsers.indexOf(a.tid) - reversedArrUsers.indexOf(b.tid);
     });
-    return sortedMatchUsers.length > 0 ? sortedMatchUsers : false;
+    return sortedMatchUsers.length > 0 ? {match:sortedMatchUsers,myLikes:reversedArrMeLikes} : {match:false,myLikes:false};
   }
 
 }
