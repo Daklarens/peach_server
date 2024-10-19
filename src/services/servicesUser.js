@@ -128,6 +128,9 @@ class UserService {
         action: action.action
       }));
       await db.insertAll('actions',updatedArr)
+      console.log('00000000000')
+      console.log(likedItems)
+      console.log(check)
       //Подключить бота для оповещения для других пользователей
       return check.length || false
     }
