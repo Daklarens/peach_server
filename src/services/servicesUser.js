@@ -149,15 +149,11 @@ class UserService {
   }
   async getMeLikes(tid){
     const myLikes = await db.find('actions',{uid:tid,action:true})
-    console.log(myLikes)
     const arrUsers = myLikes.map(item => item.dbId);
     const meLike = await db.find('actions',{uid:{$nin:arrUsers}, dbId:tid, action:true})
-    console.log(meLike)
     const arrUsersLikeMe = meLike.map(item => item.uid);
     const getAnkets = await db.find('ankets', {tid:{$in:arrUsersLikeMe}})
-    console.log(getAnkets)
     const reversedArrUsers = getAnkets.reverse();
-    console.log(reversedArrUsers)
     return reversedArrUsers || []
   }
 
