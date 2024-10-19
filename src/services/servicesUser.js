@@ -154,6 +154,7 @@ class UserService {
     const arrUsersLikeMe = meLike.map(item => item.uid);
     const getAnkets = await db.find('ankets', {tid:{$in:arrUsersLikeMe}})
     const reversedArrUsers = getAnkets.reverse();
+    console.log(reversedArrUsers)
     return reversedArrUsers || []
   }
 
