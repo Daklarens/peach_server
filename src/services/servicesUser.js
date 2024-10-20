@@ -161,12 +161,6 @@ class UserService {
     userIds.forEach(userId => {
       if(userId > 1000){
       bot.sendMessage(userId, messageText)
-        .then(() => {
-          console.log(`Сообщение успешно отправлено пользователю с ID ${userId}`);
-        })
-        .catch(error => {
-          console.error(`Ошибка при отправке сообщения пользователю с ID ${userId}:`, error.message);
-        });
       }
     });
   }
