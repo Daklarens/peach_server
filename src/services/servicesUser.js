@@ -1,4 +1,5 @@
 const db = require("../db");
+const TeleBot = require('telebot');
 const { verifyDecode, createToken } = require('../verify');
 
 class UserService {
