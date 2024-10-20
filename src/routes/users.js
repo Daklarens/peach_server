@@ -51,7 +51,7 @@ router.post('/ankets', async(req,res)=>{
       const actionsA = await service.actionsAnkets(veryfToken.decoded.id,data.actions)
       if(actionsA){
         if(actionsA.match.length > 0){await service.sendMessageToUsers(actionsA.match,'У вас образовалась взаимная симпатия 💞. Откройте приложение для просмотра',bot)}
-        if(actionsA.like.length > 0){await service.sendMessageToUsers(actionsA.like,'Вам поставили 💖')}
+        if(actionsA.like.length > 0){await service.sendMessageToUsers(actionsA.like,'Вам поставили 💖',bot)}
       }
       const userAnket = await service.getAnketsForUser(veryfToken.decoded.id,data.page)
       if(userAnket){
