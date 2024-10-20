@@ -110,7 +110,7 @@ router.get('/f1/:filename', (req, res) => {
 router.post('/getPeachUser', async(req,res)=>{
   const data = req.body.data
   const getter = await service.getInfoUser(data.ttid)
-  bot.sendMessage(data.tid,`Теперь вы можете начать общение с <a href="tg://user?id=${data.ttid}">${data.ancetName}</a>\n@${getter[0].username}`,{parseMode:'html'})
+  bot.sendMessage(data.tid,`Теперь вы можете начать общение с <a href="tg://user?id=${data.ttid}">${data.ancetName}</a>\n@${getter.username}`,{parseMode:'html'})
   res.sendStatus(200)
 })
 
