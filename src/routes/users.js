@@ -16,6 +16,7 @@ router.post("/", async (req, res) => {
   console.log('Загрузка приложения')
   try {
     const data = req.body;
+    console.log(data)
     // Проверка хеша
     const isValid = verifyTelegramData(data.initData);
     if (isValid.hash) {
