@@ -33,6 +33,7 @@ router.post("/", async (req, res) => {
       const outData = { ...userCheck, token };
       res.send(outData);
     } else {
+      console.log('Хеш не совпадает')
       res.sendStatus(502);
     }
   } catch (error) {
