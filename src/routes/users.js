@@ -20,8 +20,7 @@ router.post("/", async (req, res) => {
     const data = req.body;
     console.log(data)
     // Проверка хеша
-    const initDataString = 'query_id=AAGYe81ZAAAAAJh7zVlYGAJ5&user=%7B%22id%22%3A1506638744%2C%22first_name%22%3A%22Dark%22%2C%22last_name%22%3A%22Larens%22%2C%22username%22%3A%22darklarens%22%2C%22language_code%22%3A%22ru%22%2C%22is_premium%22%3Atrue%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2FaghIYI433tIXDaTOAbs8UFlPOFr6rXL-lnVw9hnwt4c.svg%22%7D&auth_date=1732218029&signature=SfIubt6sLAcukBwy-u5BJqkzDPaLzHLxFF0vW68OzVr7RDXeqT42__6xOKmnGt5aerOa4qucSQ_o1ddTrVpxCg&hash=30cc685cc4ae7b50585210d2dee9f52ebc846c79697412c4563e988f8303ebfd';
-    const isValid = verifyTelegramData(initDataString);//data.initData
+    const isValid = verifyTelegramData(data.initData);//data.initData
     if (isValid.hash) {
       // Парсим строку юзера
       const dataStr = isValid.data.user.replace(/"([^"]+)":/g, '$1:');
