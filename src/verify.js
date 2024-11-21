@@ -28,9 +28,9 @@ require('dotenv').config(); // Загружаем переменные окру�
     let dataCheckString = sortedKeys
         .map(key => `${key}=${data[key]}`)
         .join('\n'); // Используем '\n' как разделитель
-    const sortedKeys2 = Object.keys(data).sort();  
+    const sortedKeys2 = Object.keys(data2).sort();  
     let dataCheckString2 = sortedKeys2
-        .map(key => `${key}=${data[key]}`)
+        .map(key => `${key}=${data2[key]}`)
         .join('\n'); // Используем '\n' как разделитель  
 
     // Создаем секретный ключ используя HMAC-SHA256 и строку "WebAppData"
