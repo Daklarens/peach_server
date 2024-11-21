@@ -40,7 +40,7 @@ require('dotenv').config(); // Загружаем переменные окру�
         const dataCheckString = sortedKeys
             .map(key => `${key}=${data[key]}`)
             .join('\n'); // Используем '\n' как разделитель
-
+        console.log(dataCheckString)
         // Генерация секретного ключа
         const secretKey = crypto.createHmac('sha256', "WebAppData")
             .update(botToken)
