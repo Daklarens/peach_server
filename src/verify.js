@@ -54,6 +54,7 @@ require('dotenv').config(); // Загружаем переменные окру�
         // Сравниваем с хешем, предоставленным Telegram
         if (checkHash !== hash) {
             console.log(checkHash)
+            console.log(hash)
             return { hash: false, error: 'Хеш не совпадает' };
         }
 
