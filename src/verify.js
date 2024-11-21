@@ -3,16 +3,15 @@ const querystring = require('querystring');
 const jwt = require('jsonwebtoken');
 require('dotenv').config(); // Загружаем переменные окружения
 
-  //Проферка хеша 
-  function verifyTelegramData(initDataString) {
+function verifyTelegramData(initDataString) {
     // Парсим строку initData в объект
     const initData = querystring.parse(initDataString);
 
     // Извлекаем токен бота из переменных окружения
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
 
-    // Отделяем хеш от остальных данных
-    const { hash, ...data } = initData;
+    // Отделяем хеш от остальных данных, исключая hash, signature и auth_date
+    const { hash, signature, auth_date, ...data } = initData;
 
     // Преобразуем поле user из URL-кодированной строки JSON обратно в JSON строку
     if (data.user && typeof data.user === 'string') {
@@ -42,12 +41,11 @@ require('dotenv').config(); // Загружаем переменные окру�
     console.log('Полученный хеш от Telegram:', hash);
 
     // Сравниваем проверочный хеш с хешем из данных Telegram
-    if(checkHash === hash){
-        return {hash: true, data:initData};
-    }else{
-        return {hash: false};
+    if (checkHash === hash) {
+        return { hash: true, data: initData };
+    } else {
+        return { hash: false };
     }
-    
 }
 //Создание токена 
 function createToken(userData) {
