@@ -42,6 +42,7 @@ require('dotenv').config(); // Загружаем переменные окру�
     const checkHash = crypto.createHmac('sha256', secretKey)
         .update(dataCheckString)
         .digest('hex');
+        
     const checkHash2 = crypto.createHmac('sha256', secretKey)
         .update(dataCheckString2)
         .digest('hex');
