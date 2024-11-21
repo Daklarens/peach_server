@@ -3,7 +3,8 @@ const querystring = require('querystring');
 const jwt = require('jsonwebtoken');
 require('dotenv').config(); // Загружаем переменные окружения
 
-function verifyTelegramData(initDataString) {
+  //Проферка хеша 
+  function verifyTelegramData(initDataString) {
     // Парсим строку initData в объект
     const initData = querystring.parse(initDataString);
 
@@ -11,14 +12,14 @@ function verifyTelegramData(initDataString) {
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
 
     // Отделяем хеш от остальных данных
-    const { hash, signature, ...data } = initData; // Убираем hash и signature
+    const { hash, ...data } = initData;
 
     // Преобразуем поле user из URL-кодированной строки JSON обратно в JSON строку
     if (data.user && typeof data.user === 'string') {
         data.user = JSON.stringify(JSON.parse(data.user)); // Убедимся, что поле user в нужном формате
     }
 
-    // Сортируем ключи и создаем строку проверки данных, исключая signature
+    // Сортируем ключи и создаем строку проверки данных
     const sortedKeys = Object.keys(data).sort();
     const dataCheckString = sortedKeys
         .map(key => `${key}=${data[key]}`)
@@ -35,17 +36,18 @@ function verifyTelegramData(initDataString) {
         .digest('hex');
 
     // Печатаем для отладки
-    console.log('Строка проверки данных:', dataCheckString);
-    console.log('Секретный ключ (hex):', secretKey.toString('hex'));
-    console.log('Сгенерированный хеш:', checkHash);
-    console.log('Полученный хеш от Telegram:', hash);
+    //console.log('Строка проверки данных:', dataCheckString);
+    //console.log('Секретный ключ (hex):', secretKey.toString('hex'));
+    //console.log('Сгенерированный хеш:', checkHash);
+    //console.log('Полученный хеш от Telegram:', hash);
 
     // Сравниваем проверочный хеш с хешем из данных Telegram
-    if (checkHash === hash) {
-        return { hash: true, data: initData };
-    } else {
-        return { hash: false };
+    if(checkHash === hash){
+        return {hash: true, data:initData};
+    }else{
+        return {hash: false};
     }
+    
 }
 //Создание токена 
 function createToken(userData) {
