@@ -5,19 +5,21 @@ require('dotenv').config(); // Загружаем переменные окру�
 
 function verifyTelegramData(initDataString) {
     try {
+        // Парсим строку initData в объект
         const initData = querystring.parse(initDataString);
 
-        const botToken = process.env.TELEGRAM_BOT_TOKEN;
+        // Ваш токен бота
+        const botToken = "7080055309:AAH0hctq7SeHNEWVr7s6Khn6-ofTVGLiaw8";
 
         // Отделяем hash, signature и auth_date
         const { hash, signature, auth_date, ...data } = initData;
 
-        // Убедимся, что user остается JSON-строкой
+        // Преобразуем поле user в JSON-строку
         if (data.user && typeof data.user === 'string') {
             data.user = JSON.stringify(JSON.parse(data.user));
         }
 
-        // Создаем строку проверки данных
+        // Сортируем ключи и создаем строку проверки данных
         const sortedKeys = Object.keys(data).sort();
         const dataCheckString = sortedKeys
             .map(key => `${key}=${data[key]}`)
@@ -28,7 +30,7 @@ function verifyTelegramData(initDataString) {
             .update(botToken)
             .digest();
 
-        // Генерируем хеш
+        // Генерируем проверочный хеш
         const checkHash = crypto.createHmac('sha256', secretKey)
             .update(dataCheckString)
             .digest('hex');
@@ -38,9 +40,14 @@ function verifyTelegramData(initDataString) {
         console.log('Сгенерированный хеш:', checkHash);
         console.log('Полученный хеш от Telegram:', hash);
 
-        // Сравнение
-        return checkHash === hash;
-
+        // Сравнение хешей
+        if (checkHash === hash) {
+            console.log('Хеш совпадает: данные проверены.');
+            return true;
+        } else {
+            console.error('Хеш не совпадает: данные невалидны.');
+            return false;
+        }
     } catch (error) {
         console.error('Ошибка в verifyTelegramData:', error);
         return false;
