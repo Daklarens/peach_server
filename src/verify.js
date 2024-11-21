@@ -12,7 +12,7 @@ require('dotenv').config(); // Загружаем переменные окру�
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
 
     // Отделяем хеш от остальных данных
-    const { hash, ...data } = initData;
+    const { hash, signature, ...data } = initData;
 
     // Преобразуем поле user из URL-кодированной строки JSON обратно в JSON строку
     if (data.user && typeof data.user === 'string') {
@@ -24,7 +24,6 @@ require('dotenv').config(); // Загружаем переменные окру�
     const dataCheckString = sortedKeys
         .map(key => `${key}=${data[key]}`)
         .join('\n'); // Используем '\n' как разделитель
-    console.log(dataCheckString)
     // Создаем секретный ключ используя HMAC-SHA256 и строку "WebAppData"
     const secretKey = crypto.createHmac('sha256', "WebAppData")
         .update(botToken)
