@@ -24,8 +24,7 @@ router.post("/", async (req, res) => {
     if (isValid.hash) {
       // Парсим строку юзера
       const dataStr = isValid.data.user.replace(/"([^"]+)":/g, '$1:');
-      const jsonString = dataStr.replace(/(\w+):/g, '"$1":'); // Добавляем кавычки вокруг ключей
-      const dataUser = JSON.parse(jsonString);
+      const dataUser = JSON.parse(dataStr);
       // Сервис для авторизации данных пользователя 
       const userCheck = await service.userLoader(dataUser);
       // Создание токена с записью данных пользователя
