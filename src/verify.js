@@ -5,69 +5,33 @@ require('dotenv').config(); // Загружаем переменные окру�
 
   //Проферка хеша 
   function verifyTelegramData(initDataString) {
-    // Парсим строку initData в объект
-    const initData = querystring.parse(initDataString);
-
-    // Извлекаем токен бота из переменных окружения
-    const botToken = process.env.TELEGRAM_BOT_TOKEN;
-
-    // Отделяем хеш от остальных данных
-    const { hash, ...data } = initData;
-    //Без хеша и без сигнатуры 
-    const { hash2, signature, ...data2 } = initData
-
-    const { ...data3 } = initData
-
-    // Преобразуем поле user из URL-кодированной строки JSON обратно в JSON строку
-    if (data.user && typeof data.user === 'string') {
-        data.user = JSON.stringify(JSON.parse(data.user)); // Убедимся, что поле user в нужном формате
-        data2.user = JSON.stringify(JSON.parse(data2.user)); 
-    }
-
-    // Сортируем ключи и создаем строку проверки данных
-    const sortedKeys = Object.keys(data).sort();
-    let dataCheckString = sortedKeys
-        .map(key => `${key}=${data[key]}`)
-        .join('\n'); // Используем '\n' как разделитель
-    const sortedKeys2 = Object.keys(data2).sort();  
-    let dataCheckString2 = sortedKeys2
-        .map(key => `${key}=${data2[key]}`)
-        .join('\n'); // Используем '\n' как разделитель  
-    const sortedKeys3 = Object.keys(data3).sort();  
-    let dataCheckString3 = sortedKeys3
-            .map(key => `${key}=${data3[key]}`)
-            .join('\n'); // Используем '\n' как разделитель  
-    // Создаем секретный ключ используя HMAC-SHA256 и строку "WebAppData"
-    const secretKey = crypto.createHmac('sha256', "WebAppData")
-        .update(botToken)
-        .digest();
-
-    // Генерируем проверочный хеш с использованием секретного ключа
-    const checkHash = crypto.createHmac('sha256', secretKey)
-        .update(dataCheckString.replace(/\n/g, '\\n'))
-        .digest('hex');
-
-    const checkHash2 = crypto.createHmac('sha256', secretKey)
-        .update(dataCheckString2.replace(/\n/g, '\\n'))
-        .digest('hex');
-    const checkHash3 = crypto.createHmac('sha256', secretKey)
-        .update(dataCheckString3.replace(/\n/g, '\\n'))
-        .digest('hex');
-
-    // Печатаем для отладки
-    console.log('Строка проверки данных:', dataCheckString.replace(/\n/g, '\\n'));
-    console.log('Секретный ключ (hex):', secretKey.toString('hex'));
-    console.log('Сгенерированный хеш:', checkHash);
-    console.log('Сгенерированный хеш без сигнатуры:', checkHash2);
-    console.log('Сгенерированный хеш со всеми данными:', checkHash3);
-    console.log('Полученный хеш от Telegram:', hash);
-
-    // Сравниваем проверочный хеш с хешем из данных Telegram
-    if(checkHash === hash){
+    try {
+        // Парсим initData в объект
+        const vals = querystring.parse(initData);
+    
+        // Формируем строку проверки данных
+        const dataCheckString = Object.keys(vals)
+          .filter((key) => key !== 'hash') // Исключаем hash
+          .sort() // Сортируем ключи
+          .map((key) => `${key}=${decodeURIComponent(vals[key])}`) // Декодируем значение
+          .join('\n');
+    
+        // Создаем секретный ключ
+        const secretKey = crypto.createHmac('sha256', 'WebAppData')
+          .update(botToken)
+          .digest();
+    
+        // Вычисляем хэш строки проверки данных
+        const h = crypto.createHmac('sha256', secretKey)
+          .update(dataCheckString)
+          .digest('hex');
+    
+        // Возвращаем результат проверки
         return {hash: true, data:initData};
-    }else{
+      } catch (error) {
+        console.error('Ошибка проверки initData:', error);
         return {hash: false};
-    }
+      }
     
 }
 //Создание токена 
