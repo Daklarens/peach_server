@@ -12,7 +12,7 @@ require('dotenv').config(); // Загружаем переменные окру�
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
 
     // Отделяем хеш от остальных данных
-    const { hash, ...data } = initData;
+    const { ...data } = initData;
 
     // Преобразуем поле user из URL-кодированной строки JSON обратно в JSON строку
     if (data.user && typeof data.user === 'string') {
