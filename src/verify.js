@@ -5,9 +5,10 @@ require('dotenv').config(); // Загружаем переменные окру�
 
   //Проферка хеша 
   function verifyTelegramData(initDataString) {
+    console.log(initDataString)
     try {
         // Парсим initData в объект
-        const vals = querystring.parse(initData);
+        const vals = querystring.parse(initDataString);
     
         // Формируем строку проверки данных
         const dataCheckString = Object.keys(vals)
@@ -27,7 +28,7 @@ require('dotenv').config(); // Загружаем переменные окру�
           .digest('hex');
     
         // Возвращаем результат проверки
-        return {hash: true, data:initData};
+        return {hash: true, data:vals};
       } catch (error) {
         console.error('Ошибка проверки initData:', error);
         return {hash: false};
