@@ -25,7 +25,6 @@ require('dotenv').config(); // Загружаем переменные окру�
         .map(key => `${key}=${data[key]}`)
         .join('\n'); // Используем '\n' как разделитель
     // Создаем секретный ключ используя HMAC-SHA256 и строку "WebAppData"
-    dataCheckString = dataCheckString +'\n'
     const secretKey = crypto.createHmac('sha256', "WebAppData")
         .update(botToken)
         .digest();
