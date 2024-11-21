@@ -44,14 +44,14 @@ require('dotenv').config(); // Загружаем переменные окру�
 
     // Генерируем проверочный хеш с использованием секретного ключа
     const checkHash = crypto.createHmac('sha256', secretKey)
-        .update(dataCheckString)
+        .update(dataCheckString.replace(/\n/g, '\\n'))
         .digest('hex');
 
     const checkHash2 = crypto.createHmac('sha256', secretKey)
-        .update(dataCheckString2)
+        .update(dataCheckString2.replace(/\n/g, '\\n'))
         .digest('hex');
     const checkHash3 = crypto.createHmac('sha256', secretKey)
-        .update(dataCheckString3)
+        .update(dataCheckString3.replace(/\n/g, '\\n'))
         .digest('hex');
 
     // Печатаем для отладки
