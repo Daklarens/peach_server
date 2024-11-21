@@ -14,7 +14,7 @@ require('dotenv').config(); // Загружаем переменные окру�
     // Отделяем хеш от остальных данных
     const { hash, ...data } = initData;
     //Без хеша и без сигнатуры 
-    const { hash2, ...data2 } = initData
+    const { hash2, signature, ...data2 } = initData
 
 
     // Преобразуем поле user из URL-кодированной строки JSON обратно в JSON строку
@@ -42,7 +42,7 @@ require('dotenv').config(); // Загружаем переменные окру�
     const checkHash = crypto.createHmac('sha256', secretKey)
         .update(dataCheckString)
         .digest('hex');
-        
+
     const checkHash2 = crypto.createHmac('sha256', secretKey)
         .update(dataCheckString2)
         .digest('hex');
