@@ -9,7 +9,7 @@ require('dotenv').config(); // Загружаем переменные окру�
     try {
         // Парсим initData в объект
         const vals = querystring.parse(initDataString);
-    
+        const botToken = process.env.TELEGRAM_BOT_TOKEN;
         // Формируем строку проверки данных
         const dataCheckString = Object.keys(vals)
           .filter((key) => key !== 'hash') // Исключаем hash
