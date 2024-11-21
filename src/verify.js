@@ -21,7 +21,7 @@ require('dotenv').config(); // Загружаем переменные окру�
 
     // Сортируем ключи и создаем строку проверки данных
     const sortedKeys = Object.keys(data).sort();
-    const dataCheckString = sortedKeys
+    let dataCheckString = sortedKeys
         .map(key => `${key}=${data[key]}`)
         .join('\n'); // Используем '\n' как разделитель
     // Создаем секретный ключ используя HMAC-SHA256 и строку "WebAppData"
