@@ -99,9 +99,3 @@
 
 * GitHub: [@Daklarens](https://github.com/Daklarens)
 
-```
-
----
-
-Если хочешь, я могу подготовить и `README.en.md` (на английском) или сделать автогенерацию OpenAPI-спеки для документации API.
-```
